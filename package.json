@@ -6,9 +6,9 @@
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Danigt",
   "license": "ISC",
-  "description": "",
+  "description": "Aplicación para ver el tiempo",
   "devDependencies": {
     "electron": "^42.0.0"
   }
