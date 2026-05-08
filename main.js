@@ -15,7 +15,7 @@ const createWindow = () => {
   })
 
   win.maximize();
-  win.show();
+  win.show(); //Se muestra a pantalla completa
   win.loadFile('index.html');
 }
 
