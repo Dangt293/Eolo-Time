@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Grand Hotel';
+    src: url('../assets/Fonts/GrandHotel-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../assets/Fonts/Inter_18pt-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    /* Fondos */
+        --nav-lg: linear-gradient(135deg, #274b90 0%, #3667bb 100%);
+        --fondo-card: rgb(255, 255, 255, 30%);
+    /* Colores */
+        --blanco: #FFFFFF;
+        --enfasis: rgba(255, 255, 255, .5);
+    /* Letras */
+        --font-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --font-secundaria: 'Inter', sans-serif;
+        --font-nombreApp: 'Grand Hotel', cursive;
+    /* Tamaño letras */
+        --size-nombreApp: 32px;
+        --size-encabezado: 28px;
+}

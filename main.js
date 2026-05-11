@@ -1,13 +1,22 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 //La función createWindow() carga tu página web en una nueva instancia BrowserWindow:
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    show: false, //Se crea oculta para evitar el "salto" visual
+    // Favicono
+    icon: path.join(__dirname, 'assets/Favicono.ico'),
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
   })
 
-  win.loadFile('index.html')
+  win.maximize();
+  win.show(); //Se muestra a pantalla completa
+  win.loadFile('index.html');
 }
 
 //Llama la función cuando la app este libre

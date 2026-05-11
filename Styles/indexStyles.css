@@ -1,0 +1,74 @@
+body {
+    background: var(--nav-lg);
+    min-height: 100vh;
+    color: white;
+    font-family: var(--font-principal);
+}
+
+.encabezado {
+    font-family: var(--font-secundaria) !important;
+    font-size: var(--size-encabezado) !important;
+}
+
+/** Cabecera **/
+.navbar {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.navbar-brand {
+    font-family: var(--font-nombreApp);
+    font-size: var(--size-nombreApp);
+    color: var(--blanco) !important;
+    cursor: default;
+}
+
+.imgLogo {
+    size: 1.5rem;
+}
+
+.glass-reloj {
+    background: rgba(255, 255, 255, 0.15); /* Transparencia */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: var(--font-secundaria);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 50px;
+    color: white;
+}
+
+/** Body **/
+.add-card {
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.glass-card {
+    background: var(--fondo-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.glass-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.temp-main {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
