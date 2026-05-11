@@ -7,6 +7,7 @@
   <!-- Favicono -->
   <link rel="icon" type="image/x-icon" href="assets/Favicono.ico">
   <!-- Estilos -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="Boostrap/CSS/bootstrap.min.css">
   <link rel="stylesheet" href="Styles/estilosBase.css">
   <link rel="stylesheet" href="Styles/indexStyles.css">
@@ -24,6 +25,146 @@
       </div>
     </div>
   </nav>
+
+  <!-- *Body* -->
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="encabezado">Mis Ciudades</h2>
+      <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#addCityModal">
+        <i class="bi bi-plus-lg"></i> Añadir Ciudad
+      </button>
+    </div>
+  
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Madrid</h4>
+              <small class="text-white-50">España</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-sun-fill text-warning" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">22°C</div>
+            <p class="text-capitalize">Cielo Despejado</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Londres</h4>
+              <small class="text-white-50">Reino Unido</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-cloud-rain-heavy-fill text-info" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">12°C</div>
+            <p class="text-capitalize">Lluvia Moderada</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Londres</h4>
+              <small class="text-white-50">Reino Unido</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-cloud-rain-heavy-fill text-info" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">12°C</div>
+            <p class="text-capitalize">Lluvia Moderada</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Londres</h4>
+              <small class="text-white-50">Reino Unido</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-cloud-rain-heavy-fill text-info" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">12°C</div>
+            <p class="text-capitalize">Lluvia Moderada</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Madrid</h4>
+              <small class="text-white-50">España</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-sun-fill text-warning" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">22°C</div>
+            <p class="text-capitalize">Cielo Despejado</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100 glass-card p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h4 class="mb-0">Madrid</h4>
+              <small class="text-white-50">España</small>
+            </div>
+          </div>
+          <div class="text-center my-2">
+            <i class="bi bi-sun-fill text-warning" style="font-size: 2.5rem;"></i>
+            <div class="temp-main">22°C</div>
+            <p class="text-capitalize">Cielo Despejado</p>
+          </div>
+          <button class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10">Ver detalles <i
+              class="bi bi-arrow-right ms-2"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addCityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title">Buscar Ciudad</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control bg-dark text-white border-secondary"
+              placeholder="Ej: Buenos Aires, AR">
+            <button class="btn btn-primary" type="button">Buscar</button>
+          </div>
+          <small class="text-white-50 italic">Sugerencia: "Ciudad, Código de país"</small>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src = "Boostrap/JS/bootstrap.bundle.min.js"></script>
   <script src = "Code/indexCode.js"></script>

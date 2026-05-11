@@ -27,7 +27,6 @@ body {
     size: 1.5rem;
 }
 
-
 .glass-reloj {
     background: rgba(255, 255, 255, 0.15); /* Transparencia */
     backdrop-filter: blur(5px);
@@ -38,6 +37,16 @@ body {
     padding: 8px 15px;
     border-radius: 50px;
     color: white;
+}
+
+/** Body **/
+.add-card {
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
 }
 
 .glass-card {
@@ -53,15 +62,6 @@ body {
     transform: translateY(-10px);
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-}
-
-.add-card {
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 200px;
 }
 
 .temp-main {
