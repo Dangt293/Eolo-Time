@@ -1,5 +1,9 @@
 body {
-    background: var(--nav-lg);
+    background: var(--bg-img), var(--nav-lg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     color: white;
     font-family: var(--font-principal);

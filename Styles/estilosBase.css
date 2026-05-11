@@ -13,9 +13,11 @@
 }
 
 :root {
+    /* Background */
+        --bg-img: url('../assets/Backgrounds/neda-unsplash-soleado.jpg');
     /* Fondos */
         --nav-lg: linear-gradient(135deg, #274b90 0%, #3667bb 100%);
-        --fondo-card: rgb(255, 255, 255, 30%);
+        --fondo-card: rgb(255, 255, 255, 10%);
     /* Colores */
         --blanco: #FFFFFF;
         --enfasis: rgba(255, 255, 255, .5);
