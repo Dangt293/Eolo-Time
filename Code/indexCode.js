@@ -14,3 +14,11 @@ function actualizarReloj() {
     // Actualizamos el contenido del span
     document.getElementById('reloj').textContent = horaString.toUpperCase();
 }
+
+async function comprobarApi() {
+    const key = await window.api.getKey();
+    
+    if (!key) {
+        window.location.href = "Pages/indicarApiKey.html";
+    }
+}

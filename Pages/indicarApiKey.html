@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eolo-Time | Api Key</title>
+    <!-- Favicono -->
+    <link rel="icon" type="image/x-icon" href="../assets/Favicono.ico">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../Boostrap/Icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../Boostrap/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../Styles/estilosBase.css">
+    <link rel="stylesheet" href="../Styles/apiKeyStyles.css">
+</head>
+<body>
+    <div class="setup-container">
+        <div class="card setup-card shadow-lg">
+            <div class="card-body p-5 text-center">
+                <div class="setup-icon mb-4">
+                    <i class="bi bi-cloud-sun-fill display-1 text-primary"></i>
+                </div>
+                <h2 class="fw-bold mb-3">Bienvenido a Eolo-Time</h2>
+                <p class="text-secondary mb-4">Para mostrarte el clima en tiempo real, necesitamos tu clave de acceso a la
+                    API de OpenWeather.</p>
+    
+                <div class="alert alert-info text-start mb-4" role="alert">
+                    <h6 class="alert-heading fw-bold"><i class="bi bi-info-circle-fill me-2"></i>¿Cómo obtener mi clave?
+                    </h6>
+                    <ol class="small mb-0">
+                        <li>Regístrate gratis en <a href="#" class="alert-link" id="link-openweather">
+                            OpenWeatherMap.org
+                        </a>.</li>
+                        <li>Ve a la sección <strong>"My API Keys"</strong> en tu perfil.</li>
+                        <li>Copia la clave y pégala aquí abajo.</li>
+                    </ol>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="input-key" placeholder="Tu API Key">
+                    <label for="input-key"><i class="bi bi-key-fill me-2"></i>Introduce tu API Key</label>
+                </div>
+    
+                <button class="btn btn-primary btn-lg w-100 shadow-sm" onclick="guardarConfiguracion()">
+                    <i class="bi bi-check-circle-fill me-2"></i>Guardar y Empezar
+                </button>
+    
+                <p class="mt-4 mb-0 x-small text-muted">
+                    <i class="bi bi-shield-lock-fill me-1"></i> Tu clave se guardará de forma segura en tu equipo, nadie tendrá acceso a ella fuera de tu dispositivo.
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        
+            // Asignar el evento al enlace de forma segura
+            const link = document.getElementById('link-openweather');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (window.api && window.api.openExternal) {
+                        window.api.openExternal('https://openweathermap.org/api');
+                    } else {
+                        console.error("La API de Electron no está disponible");
+                    }
+                });
+            }
+        });
+
+        async function guardarConfiguracion() {
+            const input = document.getElementById('input-key');
+            const key = input.value.trim();
+
+            if (key.length < 10) {
+                alert("Por favor, introduce una API Key válida.");
+                input.classList.add('is-invalid');
+                return;
+            }
+
+            window.api.saveKey(key);
+            
+            // Feedback visual y reinicio
+            alert("¡Configuración guardada correctamente!");
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>
