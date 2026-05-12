@@ -9,7 +9,7 @@ function actualizarReloj() {
         hour12: true 
     };
     
-    const horaString = ahora.toLocaleTimeString(undefined, opciones);
+    const horaString = ahora.toLocaleTimeString(undefined, opciones); //Undefined para que "coja" la hora del dispositivo
     
     // Actualizamos el contenido del span
     document.getElementById('reloj').textContent = horaString.toUpperCase();

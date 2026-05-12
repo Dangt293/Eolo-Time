@@ -8,6 +8,13 @@ body {
     font-family: var(--font-secundaria);
 }
 
+.app-logo-img {
+    width: 100px; 
+    height: auto; 
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15));
+    margin-bottom: 10px;
+}
+
 .setup-container {
     width: 100%;
     max-width: 500px;
