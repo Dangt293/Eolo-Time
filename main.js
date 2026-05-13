@@ -40,6 +40,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
+// *ESCRITURA*
 // Función para guardar la Key de OpenWeather
 ipcMain.on('guardar-key', (event, key) => {
     const carpetaUsuario = app.getPath('userData');
@@ -64,6 +65,7 @@ ipcMain.on('guardar-key', (event, key) => {
     fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2)); // El 'null, 2' hace que el JSON sea legible
 });
 
+// *LECTURA*
 // Función para leer la Key de OpenWeather
 ipcMain.handle('leer-key', () => {
     if (fs.existsSync(rutaArchivo)) {
@@ -74,6 +76,31 @@ ipcMain.handle('leer-key', () => {
     return null;
 });
 
+// *COMBINADA LECTURA Y ESCRITURA*
+//Inicializa las 4 ciudades default
+ipcMain.handle('inicializar-datos-defecto', async () => {
+    if (fs.existsSync(rutaArchivo)) {
+        try {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            let config = JSON.parse(contenido);
+
+            // Solo añadimos las ciudades si NO existen ya en el JSON
+            if (!config.ciudadesDefault) {
+                config.ciudadesDefault = ["Madrid", "Barcelona", "Bilbao", "Sevilla"];
+                fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2));
+                return { status: 'creadas', datos: config.ciudadesDefault };
+            }
+            
+            return { status: 'existian', datos: config.ciudadesDefault };
+        } catch (e) {
+            console.error("Error al inicializar datos:", e);
+            return null;
+        }
+    }
+    return null;
+});
+
+// *OTROS*
 //Para deridigir a navegador
 ipcMain.on('abrir-link-externo', (event, url) => {
   shell.openExternal(url);
