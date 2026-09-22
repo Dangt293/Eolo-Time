@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eolo-Time | Dashboard</title>
+    <!-- Favicono -->
+    <link rel="icon" type="image/x-icon" href="../assets/Favicono.ico">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../Boostrap/Icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../Boostrap/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../Styles/estilosBase.css">
+    <link rel="stylesheet" href="../Styles/dashboardStyles.css">
+</head>
+
+<body>
+    <!-- *Cabecera* -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+        <div class="navbar-brand">
+            <img src="../assets/Logo.png" alt="Eolo-Time" width="70" height="60" class="d-inline-block imgLogo">
+            <span class="d-inline-block">Eolo-Time</span>
+        </div>
+        <div class="ms-auto">
+            <span id="reloj" class="badge glass-reloj">16:45 PM</span>
+        </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-cloud-sun display-3 me-3"></i>
+                    <div class="text-start">
+                        <h3 class="mb-0">Parcialmente Nublado</h3>
+                        <span>Probabilidad de lluvia: 10%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <h1 class="display-4 fw-bold">Madrid, España</h1>
+                <p class="lead"><i class="bi bi-calendar3"></i> Martes, 12 de Mayo | 14:30 PM</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="glass-card text-center d-flex flex-column justify-content-center">
+                            <p class="text-uppercase tracking-wider mb-0">Temperatura Actual</p>
+                            <h2 class="temp-main">22°C</h2>
+                            <p class="fs-5">
+                                <span class="text-info"><i class="bi bi-arrow-down"></i> 14°C</span> |
+                                <span class="text-danger"><i class="bi bi-arrow-up"></i> 26°C</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="glass-card">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-thermometer-half detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Sensación</small>
+                                            <strong>20°C</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-droplet-fill detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Humedad</small>
+                                            <strong>45%</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-wind detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Viento</small>
+                                            <strong>12 km/h</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-speedometer detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Presión</small>
+                                            <strong>1015 hPa</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-eye detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Visibilidad</small>
+                                            <strong>10 km</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-sun detail-icon me-2"></i>
+                                        <div>
+                                            <small class="d-block text-white-50">Índice UV</small>
+                                            <strong>6 (Alto)</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="glass-card">
+                            <h5 class="mb-4"><i class="bi bi-clock"></i> Pronóstico por bloques de 3 Horas</h5>
+                            <div class="scroll-x">
+                                <div class="hourly-item">
+                                    <small class="text-white-50">00:00</small>
+                                    <i class="bi bi-sun d-block my-2 fs-4"></i>
+                                    <strong>24°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">03:00</small>
+                                    <i class="bi bi-sun d-block my-2 fs-4"></i>
+                                    <strong>25°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">06:00</small>
+                                    <i class="bi bi-cloud-sun d-block my-2 fs-4"></i>
+                                    <strong>23°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">09:00</small>
+                                    <i class="bi bi-cloud-sun d-block my-2 fs-4"></i>
+                                    <strong>21°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">12:00</small>
+                                    <i class="bi bi-cloud d-block my-2 fs-4"></i>
+                                    <strong>19°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">15:00</small>
+                                    <i class="bi bi-moon-stars d-block my-2 fs-4"></i>
+                                    <strong>17°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">18:00</small>
+                                    <i class="bi bi-moon-stars d-block my-2 fs-4"></i>
+                                    <strong>16°</strong>
+                                </div>
+                                <div class="hourly-item">
+                                    <small class="text-white-50">21:00</small>
+                                    <i class="bi bi-moon-stars d-block my-2 fs-4"></i>
+                                    <strong>16°</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <h5 class="mb-4"><i class="bi bi-calendar-week"></i> Próximos Días</h5>
+
+                    <div class="forecast-day d-flex justify-content-between align-items-center">
+                        <span>Mañana</span>
+                        <i class="bi bi-cloud-rain fs-5 text-info"></i>
+                        <span><strong>20°</strong> / 12°</span>
+                    </div>
+                    <div class="forecast-day d-flex justify-content-between align-items-center">
+                        <span>En 2 días</span>
+                        <i class="bi bi-cloud-sun fs-5 text-warning"></i>
+                        <span><strong>22°</strong> / 14°</span>
+                    </div>
+                    <div class="forecast-day d-flex justify-content-between align-items-center">
+                        <span>En 3 días</span>
+                        <i class="bi bi-sun fs-5 text-warning"></i>
+                        <span><strong>25°</strong> / 15°</span>
+                    </div>
+                    <div class="forecast-day d-flex justify-content-between align-items-center">
+                        <span>En 4 días</span>
+                        <i class="bi bi-sun fs-5 text-warning"></i>
+                        <span><strong>28°</strong> / 18°</span>
+                    </div>
+                    <div class="forecast-day d-flex justify-content-between align-items-center">
+                        <span>En 5 días</span>
+                        <i class="bi bi-cloud-lightning fs-5 text-white-50"></i>
+                        <span><strong>19°</strong> / 11°</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

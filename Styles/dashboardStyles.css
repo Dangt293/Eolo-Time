@@ -1,0 +1,100 @@
+body {
+    background: var(--bg-img), var(--nav-lg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: white;
+    font-family: var(--font-principal);
+}
+
+/** Cabecera **/
+.navbar {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.navbar-brand {
+    font-family: var(--font-nombreApp);
+    font-size: var(--size-nombreApp);
+    color: var(--blanco) !important;
+    cursor: default;
+}
+
+.imgLogo {
+    size: 1.5rem;
+}
+
+.glass-reloj {
+    background: rgba(255, 255, 255, 0.15); /* Transparencia */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: var(--font-secundaria);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 50px;
+    color: white;
+}
+
+/** Body **/
+.glass-card {
+    background: var(--fondo-card);
+    /* backdrop-filter: blur(10px); */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    height: 100%;
+}
+
+.temp-main {
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.text-info {
+    --bs-text-opacity: 1;
+    color: rgb(84 13 240) !important;
+}
+
+.hourly-item {
+    min-width: 80px;
+    text-align: center;
+    padding: 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hourly-item:last-child {
+    border: none;
+}
+
+.forecast-day {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 0;
+}
+
+.forecast-day:last-child {
+    border: none;
+}
+
+.detail-icon {
+    font-size: 1.5rem;
+    color: #add8e6;
+}
+
+.scroll-x {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.scroll-x::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
