@@ -26,7 +26,7 @@ body {
     size: 1.5rem;
 }
 
-.glass-reloj {
+.back-buttom {
     background: rgba(255, 255, 255, 0.15); /* Transparencia */
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -36,12 +36,14 @@ body {
     padding: 8px 15px;
     border-radius: 50px;
     color: white;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 /** Body **/
 .glass-card {
     background: var(--fondo-card);
-    /* backdrop-filter: blur(10px); */
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     padding: 20px;
