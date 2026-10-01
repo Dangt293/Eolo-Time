@@ -32,15 +32,16 @@
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
-                    <i class="bi bi-cloud-sun display-3 me-3"></i>
+                    <img id="icono-clima" class="display-3 me-3" style="width: 80px;" alt="Clima">
+                    <!-- <i class="bi bi-cloud-sun display-3 me-3"></i> -->
                     <div class="text-start">
-                        <h3 class="mb-0">Parcialmente Nublado</h3>
-                        <span>Probabilidad de lluvia: 10%</span>
+                        <h3 class="mb-0 text-capitalize" id = "descrip"></h3>
+                        <span id = "pop"></span>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 text-md-end">
-                <h1 class="display-4 fw-bold">Madrid, España</h1>
+                <h1 class="display-4 fw-bold"><span id = "ciudad"></span>, <span id = "pais"></span></h1>
                 <p class="lead"><i class="bi bi-calendar3"></i> Martes, 12 de Mayo | 14:30 PM</p>
             </div>
         </div>
@@ -205,6 +206,7 @@
     </div>
 
     <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
+    <script src = "../Code/dashboardCode.js"></script>
 </body>
 
 </html>
