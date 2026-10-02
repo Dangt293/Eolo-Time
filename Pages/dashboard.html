@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-6 text-md-end">
                 <h1 class="display-4 fw-bold"><span id = "ciudad"></span>, <span id = "pais"></span></h1>
-                <p class="lead"><i class="bi bi-calendar3"></i> Martes, 12 de Mayo | 14:30 PM</p>
+                <p class="lead"><i class="bi bi-calendar3"></i> <span id="fecha" class = "text-capitalize">Lunes, 1 de enero</span> | <span id="reloj">00:00</span></p>
             </div>
         </div>
 
@@ -52,10 +52,10 @@
                     <div class="col-md-6">
                         <div class="glass-card text-center d-flex flex-column justify-content-center">
                             <p class="text-uppercase tracking-wider mb-0">Temperatura Actual</p>
-                            <h2 class="temp-main">22°C</h2>
+                            <h2 class="temp-main"><span id = "temp-main"></span>°C</h2>
                             <p class="fs-5">
-                                <span class="text-info"><i class="bi bi-arrow-down"></i> 14°C</span> |
-                                <span class="text-danger"><i class="bi bi-arrow-up"></i> 26°C</span>
+                                <span class="text-info"><i class="bi bi-arrow-down"></i><span id = "temp-min"></span>°C</span> |
+                                <span class="text-danger"><i class="bi bi-arrow-up"></i><span id = "temp-max"></span>°C</span>
                             </p>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                         <i class="bi bi-thermometer-half detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Sensación</small>
-                                            <strong>20°C</strong>
+                                            <strong id = "sensacion"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
                                         <i class="bi bi-droplet-fill detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Humedad</small>
-                                            <strong>45%</strong>
+                                            <strong id = "humedad"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                         <i class="bi bi-wind detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Viento</small>
-                                            <strong>12 km/h</strong>
+                                            <strong id = "vel-viento"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                                         <i class="bi bi-speedometer detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Presión</small>
-                                            <strong>1015 hPa</strong>
+                                            <strong id = "presion"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                         <i class="bi bi-eye detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Visibilidad</small>
-                                            <strong>10 km</strong>
+                                            <strong id = "visibilidad"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                         <i class="bi bi-sun detail-icon me-2"></i>
                                         <div>
                                             <small class="d-block text-white-50">Índice UV</small>
-                                            <strong>6 (Alto)</strong>
+                                            <strong id = "indice_uv"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -207,6 +207,10 @@
 
     <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script src = "../Code/dashboardCode.js"></script>
+    <script>
+        actualizarFecha();
+        setInterval(actualizarFecha, 1000);
+    </script>
 </body>
 
 </html>
