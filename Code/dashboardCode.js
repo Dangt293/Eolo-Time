@@ -122,6 +122,39 @@ async function mostrarClima(datos, forecast, ciudad) {
     const nivel = nivelesUV.find(rango => indice <= rango.max)?.texto;
 
     document.getElementById("indice_uv").innerHTML = indice + " " + nivel;
+
+    //Cargamos el pronóstico por horas
+    obtenerPronosticoHoras(forecast);
+
+    //Cargamos el pronóstico de los 5 próximos días
+    const diasFuturos = obtenerPronostico5Dias(forecast);
+    let html = "";
+
+    diasFuturos.forEach(diaFuturo => {
+        // Formatear la fecha para mostrar el día
+        const fechaObj = new Date(diaFuturo.fecha + 'T00:00:00');
+        const fecha = fechaObj.getDate() +"/"+ fechaObj.getMonth() +"/"+ fechaObj.getFullYear();
+        const icono = obtenerIconoBootstrap(diaFuturo.icono);
+
+        html += `
+            <div class="forecast-day d-flex justify-content-between align-items-center py-2 border-bottom border-white border-opacity-10">
+            <span class="fecha-col">${fecha}</span>
+
+            <i class="bi ${icono} fs-5"></i>
+
+            <div class="d-flex flex-column align-items-end temp-col text-nowrap">
+                <span class="text-danger fw-semibold">
+                    ${diaFuturo.temp_max}° <i class="bi bi-arrow-up"></i>
+                </span>
+                <span class="text-info fw-semibold">
+                    ${diaFuturo.temp_min}° <i class="bi bi-arrow-down"></i>
+                </span>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById("pronostico-dias").innerHTML = html;
 }
 
 //Hace una llamada a OpenWeather para obtener el índice UV de la ciudad
@@ -145,4 +178,96 @@ async function obtenerIndiceUV(lat, lon) {
     console.error("No se pudo obtener el índice UV:", error);
     return null;
   }
+}
+
+//Obtiene el pronóstico de las próximas 24h en bloques de 3 horas
+function obtenerPronosticoHoras(forecast) {
+    const ahoraEnSegundos = Math.floor(Date.now() / 1000);
+
+    //Obtiene los siguientes 8 tramos a partir de la hora actual
+    const proximosTramos = forecast.list.filter(item => item.dt > ahoraEnSegundos).slice(0, 9);
+
+    let html = '';
+
+    proximosTramos.forEach(tramo => {
+        // Formatear hora a HH:mm
+        const fecha = new Date(tramo.dt * 1000);
+        const hora = fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        
+        const temp = Math.round(tramo.main.temp);
+        const codIcono = tramo.weather[0].icon;
+
+        const icono = obtenerIconoBootstrap(codIcono);
+
+        html += `
+            <div class="hourly-item">
+                <small class="text-white-50">${hora}</small>
+                    <i class = "bi ${icono} d-block my-2 fs-4"></i>
+                    <strong>${temp}°</strong>
+            </div>
+        `;
+    });
+
+    document.getElementById('pronostico-horas').innerHTML = html;
+}
+
+//Obtiene el pronóstico principal de los próximos 5 días
+function obtenerPronostico5Dias(forecast) {
+    const resumenDias = {};
+
+    forecast.list.forEach(item => {
+        // Obtenemos la fecha en formato "YYYY-MM-DD"
+        const fecha = item.dt_txt.split(' ')[0];
+
+        if (!resumenDias[fecha]) {
+            resumenDias[fecha] = {
+                fecha: fecha,
+                temp_min: Math.round(item.main.temp_min),
+                temp_max: Math.round(item.main.temp_max),
+                icono: item.weather[0].icon
+            };
+        } else {
+            // Actualizamos la temperatura mínima y máxima del día completo
+            if (item.main.temp_min < resumenDias[fecha].temp_min) {
+                resumenDias[fecha].temp_min = Math.round(item.main.temp_min);
+            }
+            if (item.main.temp_max > resumenDias[fecha].temp_max) {
+                resumenDias[fecha].temp_max = Math.round(item.main.temp_max);
+            }
+        }
+
+        // Si el tramo es cercano al mediodía (12:00 o 15:00), usamos su icono como el "principal"
+        if (item.dt_txt.includes("12:00:00") || item.dt_txt.includes("15:00:00")) {
+            resumenDias[fecha].icono = item.weather[0].icon;
+        }
+    });
+
+    //Convertimos el objeto en un Array y tomamos los primeros 5 días, ya que dependiendo la hora de a la que consultemos puede devolver 6
+    return Object.values(resumenDias).slice(0, 5);
+}
+
+//Asigna un icono de bootstrap a cada código de icono que devuelve la API
+function obtenerIconoBootstrap(codigoIcono) {
+    const mapa = {
+        '01d': 'bi-sun',               // Soleado día
+        '01n': 'bi-moon-stars',         // Despejado noche
+        '02d': 'bi-cloud-sun',          // Algo nublado día
+        '02n': 'bi-cloud-moon',         // Algo nublado noche
+        '03d': 'bi-cloud',              // Nublado
+        '03n': 'bi-cloud',
+        '04d': 'bi-clouds',             // Muy nublado
+        '04n': 'bi-clouds',
+        '09d': 'bi-cloud-drizzle',      // Llovizna
+        '09n': 'bi-cloud-drizzle',
+        '10d': 'bi-cloud-rain',         // Lluvia
+        '10n': 'bi-cloud-rain',
+        '11d': 'bi-cloud-lightning',    // Tormenta
+        '11n': 'bi-cloud-lightning',
+        '13d': 'bi-snowflake',          // Nieve
+        '13n': 'bi-snowflake',
+        '50d': 'bi-cloud-haze',         // Niebla
+        '50n': 'bi-cloud-haze'
+    };
+
+    return mapa[codigoIcono];
 }
