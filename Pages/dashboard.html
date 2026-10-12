@@ -28,7 +28,15 @@
         </div>
     </nav>
 
-    <div class="container">
+    <!-- *Spinner* -->
+    <div class="d-flex justify-content-center text-center align-items-center w-100 h-100 position-absolute" style="top: 0; left: 0;" id = "capaSpinner">
+        <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;" id = "spinner">
+            <span class="visually-hidden">...</span>
+        </div>
+    </div>
+
+    <!-- *Body* -->
+    <div class="container d-none" id = "contenido-principal">
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
@@ -123,7 +131,7 @@
 
                     <div class="col-12">
                         <div class="glass-card">
-                            <h5 class="mb-4"><i class="bi bi-clock"></i> Pronóstico por bloques de 3 Horas</h5>
+                            <h5 class="mb-4"><i class="bi bi-clock"></i> Próximas 24 horas en bloques de 3 horas</h5>
                             <div class="scroll-x" id = "pronostico-horas">
                             </div>
                         </div>
@@ -132,33 +140,10 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="glass-card" id = "pronostico-dias">
+                <div class="glass-card">
                     <h5 class="mb-4"><i class="bi bi-calendar-week"></i> Próximos Días</h5>
+                    <div id = "pronostico-dias">
 
-                    <div class="forecast-day d-flex justify-content-between align-items-center">
-                        <span>Mañana</span>
-                        <i class="bi bi-cloud-rain fs-5 text-info"></i>
-                        <span><strong>20°</strong> / 12°</span>
-                    </div>
-                    <div class="forecast-day d-flex justify-content-between align-items-center">
-                        <span>En 2 días</span>
-                        <i class="bi bi-cloud-sun fs-5 text-warning"></i>
-                        <span><strong>22°</strong> / 14°</span>
-                    </div>
-                    <div class="forecast-day d-flex justify-content-between align-items-center">
-                        <span>En 3 días</span>
-                        <i class="bi bi-sun fs-5 text-warning"></i>
-                        <span><strong>25°</strong> / 15°</span>
-                    </div>
-                    <div class="forecast-day d-flex justify-content-between align-items-center">
-                        <span>En 4 días</span>
-                        <i class="bi bi-sun fs-5 text-warning"></i>
-                        <span><strong>28°</strong> / 18°</span>
-                    </div>
-                    <div class="forecast-day d-flex justify-content-between align-items-center">
-                        <span>En 5 días</span>
-                        <i class="bi bi-cloud-lightning fs-5 text-white-50"></i>
-                        <span><strong>19°</strong> / 11°</span>
                     </div>
                 </div>
             </div>

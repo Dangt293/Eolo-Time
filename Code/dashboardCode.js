@@ -155,6 +155,11 @@ async function mostrarClima(datos, forecast, ciudad) {
     });
 
     document.getElementById("pronostico-dias").innerHTML = html;
+
+    //Desactiva el spinner de carga
+    document.getElementById("spinner").style.display = "none";
+    document.getElementById("capaSpinner").style.setProperty('display', 'none', 'important');
+    document.getElementById("contenido-principal").classList.remove("d-none");
 }
 
 //Hace una llamada a OpenWeather para obtener el índice UV de la ciudad
@@ -215,9 +220,17 @@ function obtenerPronosticoHoras(forecast) {
 function obtenerPronostico5Dias(forecast) {
     const resumenDias = {};
 
+    const ahora = new Date();
+    const año = ahora.getFullYear();
+    const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+    const dia = String(ahora.getDate()).padStart(2, '0');
+    const hoyString = `${año}-${mes}-${dia}`;
+
     forecast.list.forEach(item => {
         // Obtenemos la fecha en formato "YYYY-MM-DD"
         const fecha = item.dt_txt.split(' ')[0];
+
+        if (fecha == hoyString) return; //Se asegura de no incluir el día de hoy
 
         if (!resumenDias[fecha]) {
             resumenDias[fecha] = {
