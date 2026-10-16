@@ -156,10 +156,11 @@ async function mostrarClima(datos, forecast, ciudad) {
 
     document.getElementById("pronostico-dias").innerHTML = html;
 
-    //Desactiva el spinner de carga
+    //Desactiva el spinner de carga y muestra el contenido
     document.getElementById("spinner").style.display = "none";
     document.getElementById("capaSpinner").style.setProperty('display', 'none', 'important');
     document.getElementById("contenido-principal").classList.remove("d-none");
+    document.getElementById("footer").classList.remove("d-none");
 }
 
 //Hace una llamada a OpenWeather para obtener el índice UV de la ciudad
