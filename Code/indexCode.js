@@ -69,9 +69,12 @@ async function obtenerClima(ciudad) {
 //Muestra los datos de la ciudad
 function mostrarClima(datos, ciudadSolicitada) {
     const contenedor = document.getElementById('ciudadesCards');
-    const ciudad = ciudadSolicitada; //Para evitar nombres en inglés
+
+    const [nombreCiudad, codigoPais] = ciudadSolicitada.split(',');
+    const ciudad = nombreCiudad.trim();
+    const pais = codigoPais ? codigoPais.trim() : '';
+
     //Extraemos lo necesario
-    const pais = datos.sys.country;
     const temp = Math.round(datos.main.temp);
     const descripcion = datos.weather[0].description;
     const iconoOriginal = datos.weather[0].icon;
@@ -93,7 +96,7 @@ function mostrarClima(datos, ciudadSolicitada) {
             <p class="text-capitalize">${descripcion}</p>
         </div>
         
-        <a href="Pages/dashboard.html?ciudad=${ciudad}" class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10 stretched-link">
+        <a href="Pages/dashboard.html?ciudad=${ciudad}&pais=${pais}" class="btn btn-outline-light w-100 border-0 bg-white bg-opacity-10 stretched-link">
             Ver detalles <i class="bi bi-arrow-right ms-2"></i>
         </a>
         </div>

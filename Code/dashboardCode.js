@@ -2,10 +2,11 @@ window.addEventListener('DOMContentLoaded', () => {
     // Leer el parámetro ?ciudad= de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const ciudad = urlParams.get('ciudad');
+    const pais = urlParams.get('pais');
 
-    if (ciudad) {
+    if (ciudad && pais) {
         // Llamamos a la API con la ciudad seleccionada
-        obtenerClima(ciudad);
+        obtenerClima(ciudad, pais);
     }
 });
 
@@ -37,7 +38,7 @@ function actualizarFecha() {
 }
 
 //Hace una llamada a OpenWeather para obtener datos de la ciudad
-async function obtenerClima(ciudad) {
+async function obtenerClima(ciudad, pais) {
     //Obtener la clave desde AppData
     const apiKey = await window.api.getKey();
 
@@ -47,8 +48,10 @@ async function obtenerClima(ciudad) {
         return;
     }
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&units=metric&lang=es`;
-    const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${ciudad}&appid=${apiKey}&units=metric&lang=es`;
+    const ubicacion = ciudad +", " +pais;
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ubicacion}&appid=${apiKey}&units=metric&lang=es`;
+    const url2 = `https://api.openweathermap.org/data/2.5/forecast?q=${ubicacion}&appid=${apiKey}&units=metric&lang=es`;
 
     try {
         const respuesta = await fetch(url);
@@ -73,7 +76,7 @@ async function obtenerClima(ciudad) {
         const forecast = await respForecast.json();
 
 
-        mostrarClima(datos, forecast, ciudad);
+        mostrarClima(datos, forecast, ciudad, pais);
     } catch (error) {
         console.error("Error al obtener el clima:", error.message);
         alert("Error: " + error.message);
@@ -81,13 +84,13 @@ async function obtenerClima(ciudad) {
 }
 
 //Muestra en el dashboard los datos obtenidos en el JSON de OpenWeather
-async function mostrarClima(datos, forecast, ciudad) {
+async function mostrarClima(datos, forecast, ciudad, pais) {
     console.log(JSON.stringify(datos, null, 2));
     console.log(JSON.stringify(forecast, null, 2));
 
     //Ajustamos los datos principales a los de la ciudad
     document.getElementById("ciudad").innerHTML = ciudad;
-    document.getElementById("pais").innerHTML = datos.sys.country;
+    document.getElementById("pais").innerHTML = pais;
 
     const iconCode = datos.weather[0].icon;
     document.getElementById('icono-clima').src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
