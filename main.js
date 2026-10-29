@@ -65,6 +65,54 @@ ipcMain.on('guardar-key', (event, key) => {
     fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2)); // El 'null, 2' hace que el JSON sea legible
 });
 
+//Guarda en el array de ciudades una nueva
+ipcMain.handle('guardar-ciudad', async (event, nuevaCiudad) => {
+    try {
+        const carpetaUsuario = app.getPath('userData');
+        const rutaConfig = path.join(carpetaUsuario, 'config-eolotime.json');
+
+        // Estructura base por defecto
+        let config = { ciudadesDefault: [] };
+
+        // Si el archivo ya existe, lo leemos de forma segura
+        if (fs.existsSync(rutaConfig)) {
+            const contenido = fs.readFileSync(rutaConfig, 'utf-8');
+            
+            if (contenido.trim() !== "") {
+                const parsed = JSON.parse(contenido);
+                
+                // Si el JSON guardado es directamente un array, lo adaptamos
+                if (Array.isArray(parsed)) {
+                    config.ciudadesDefault = parsed;
+                } 
+                // Si es un objeto, cogemos su contenido
+                else if (parsed && typeof parsed === 'object') {
+                    config = parsed;
+                }
+            }
+        }
+
+        // Evitar duplicados en el backend por seguridad
+        const yaExiste = config.ciudadesDefault.some(
+            c => c.toLowerCase() === nuevaCiudad.toLowerCase()
+        );
+
+        if (!yaExiste) {
+            config.ciudadesDefault.push(nuevaCiudad);
+        }
+
+        // Escribimos los cambios limpios en el archivo JSON
+        fs.writeFileSync(rutaConfig, JSON.stringify(config, null, 2), 'utf-8');
+        console.log(`Ciudad "${nuevaCiudad}" guardada correctamente.`);
+
+        return { success: true, ciudades: config.ciudadesDefault };
+
+    } catch (error) {
+        console.error("Error al guardar la ciudad en el JSON:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 // *LECTURA*
 // Función para leer la Key de OpenWeather
 ipcMain.handle('leer-key', () => {
@@ -86,7 +134,7 @@ ipcMain.handle('inicializar-datos-defecto', async () => {
 
             // Solo añadimos las ciudades si NO existen ya en el JSON
             if (!config.ciudadesDefault) {
-                config.ciudadesDefault = ["Madrid", "Barcelona", "Bilbao", "Sevilla"];
+                config.ciudadesDefault = ["Madrid, ES", "Barcelona, ES", "Bilbao, ES", "Sevilla, ES"];
                 fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2));
                 return { status: 'creadas', datos: config.ciudadesDefault };
             }

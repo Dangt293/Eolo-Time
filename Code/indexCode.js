@@ -36,6 +36,79 @@ async function comprobarApi() {
     }
 }
 
+//Comprueba que la ciudad exista, y verifica que no estuviese ya en el json.
+async function aniadirCiudad() {
+    const modalElement = document.getElementById('nuevaCiudadModal');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+    const ciudadBuscada = document.getElementById("ciudadNueva").value;
+
+    if (!ciudadBuscada) {
+        alert("Por favor, introduce una ciudad.");
+        return;
+    }
+
+    const apiKey = await window.api.getKey();
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudadBuscada}&appid=${apiKey}&units=metric&lang=es`;
+    try {
+        const respuesta = await fetch(url);
+
+        // Si OpenWeather devuelve un error es porque la ciudad no existe
+        if (!respuesta.ok) {
+            throw new Error("La ciudad introducida no existe o no es válida.");
+        }
+
+        const datos = await respuesta.json();
+
+        // Datos oficiales que devuelve la API
+        const ciudadOficial = datos.name;         
+        const paisOficial = datos.sys.country;
+
+        console.log(`Ciudad verificada con éxito: ${ciudadOficial}, ${paisOficial}`);
+
+        //Comprobar que no existe ya en el array
+        const ciudadesArray = await window.api.inicializarCiudades();
+        for (const ciudad of ciudadesArray.datos) {
+            if (ciudad.toLowerCase() === ciudadBuscada.toLowerCase()) {
+                throw new Error("La ciudad ya estaba registrada.");
+            }
+        }
+
+        //Si llega hasta aquí todo ha ido bien, la añadimos al json y la cargamos en la página
+        const resultado = await window.api.guardarCiudad(ciudadBuscada);
+
+        if (resultado.success) {
+            console.log("Ciudades actualizadas:", resultado.ciudades);
+                
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+            modal.hide();
+
+            // Recargamos el dashboard para que aparezca la nueva tarjeta
+            obtenerClima(ciudadBuscada); 
+        } else {
+            throw new Error("Hubo un error al guardar la ciudad en el disco.");
+        }
+
+    } catch (error) {
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
+
+        modal.hide();
+        mostrarMensaje(error);
+    }
+}
+
+//Muestra un modal de error si algo falla
+function mostrarMensaje(error) {
+    const modalCuerpo = document.querySelector('#errorModal .modal-body');
+    modalCuerpo.innerHTML = '<p>'+error+'</p>';
+
+    const myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    myModal.show();
+}
+
 //Hace una llamada a OpenWeather para obtener datos de la ciudad
 async function obtenerClima(ciudad) {
     //Obtener la clave desde AppData
