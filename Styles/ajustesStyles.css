@@ -1,0 +1,46 @@
+body {
+    background: #274b90;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: white;
+    font-family: var(--font-principal);
+}
+
+/** Cabecera **/
+.navbar {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.navbar-brand {
+    font-family: var(--font-nombreApp);
+    font-size: var(--size-nombreApp);
+    color: var(--blanco) !important;
+    cursor: default;
+}
+
+.imgLogo {
+    size: 1.5rem;
+}
+
+.back-buttom {
+    background: rgba(255, 255, 255, 0.15); /* Transparencia */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: var(--font-secundaria);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/** Body **/
+.apiKeyCard {
+    background: #3667bb;
+}
