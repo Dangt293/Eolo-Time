@@ -40,6 +40,12 @@ body {
     text-decoration: none;
 }
 
+@media (max-width: 425px) {
+    .imgLogo {
+        width: 50px;
+    }
+}
+
 /** Body **/
 .apiKeyCard {
     background: #3667bb;
