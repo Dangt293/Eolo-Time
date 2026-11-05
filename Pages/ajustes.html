@@ -29,8 +29,10 @@
     </nav>
 
     <!-- *Body* -->
+
+    <!--*API KEY*-->
     <div class="card text-white border-primary mt-3 mx-3 mx-md-5">
-        <div class="card-body apiKeyCard">
+        <div class="card-body cardConfig">
             <h5 class="card-title mb-3"><i class="bi bi-key-fill"></i> Configuración de OpenWeather API</h5>
             
             <div class="mb-3">
@@ -56,6 +58,191 @@
         </div>
     </div>
 
-    <script src = "Boostrap/JS/bootstrap.bundle.min.js"></script>
+    <!--*Ciudades*-->
+    <div class="card text-white border-primary mt-3 mx-3 mx-md-5">
+        <div class="card-body cardConfig">
+            <h5 class="card-title mb-3"><i class="bi bi-list-nested"></i> Gestionar Ciudades</h5>
+            <p class="card-text text-white small">Arrastra desde los puntos para reordenar o usa las flechas. Haz click en la papelera para eliminar.
+            </p>
+    
+            <!-- Lista de ciudades -->
+            <ul class="list-group list-group-flush bg-transparent" id="listaCiudades">
+            
+                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
+                    draggable="true">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
+                            title="Arrastrar para mover"></i>
+                        <span class="fw-bold">Madrid</span>
+                        <span class="badge bg-secondary text-light">España</span>
+                    </div>
+            
+                    <!-- Controles de acción (Mover arriba, abajo y eliminar) -->
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            
+                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
+                    draggable="true">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
+                            title="Arrastrar para mover"></i>
+                        <span class="fw-bold">Barcelona</span>
+                        <span class="badge bg-secondary text-light">España</span>
+                    </div>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            
+                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
+                    draggable="true">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
+                            title="Arrastrar para mover"></i>
+                        <span class="fw-bold">Aranjuez</span>
+                        <span class="badge bg-secondary text-light">España</span>
+                    </div>
+            
+                    <!-- Controles de acción (Mover arriba, abajo y eliminar) -->
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--*Fondo pantalla*-->
+    <div class="card bg-dark text-white border-secondary mt-3 mb-3 mx-3 mx-md-5">
+        <div class="card-body cardConfig">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="card-title mb-1"><i class="bi bi-image"></i> Fondo de Pantalla</h5>
+                    <p class="card-text text-white small mb-0">Personaliza la apariencia del dashboard.</p>
+                </div>
+                <!-- Botón que activa el desplegable -->
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFondos" aria-expanded="false" aria-controls="collapseFondos">
+                    <i class="bi bi-palette"></i> Cambiar fondo
+                </button>
+            </div>
+    
+            <!-- Contenido Desplegable (Collapse) -->
+            <div class="collapse mt-4" id="collapseFondos">
+                <hr class="border-secondary mb-4">
+                <h6 class="mb-3 text-white">Selecciona una imagen:</h6>
+    
+                <div class="row row-cols-2 row-cols-md-4 g-3" id="galeriaFondos">
+    
+                    <!-- Opción 1 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="fondo1.jpg" title="Foto por Click and Learn Photography en Unsplash">
+                            <img src="../assets/Backgrounds/clickAndLearnPhotography-unsplash-arbolNevado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 1"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 2 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="fondo2.jpg" title="Foto por mark en Unsplash">
+                            <img src="../assets/Backgrounds/mark-unsplash-viento.jpg" class="card-img-top rounded img-fluid" alt="Fondo 2"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 3 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="fondo3.jpg" title="Foto por neda en Unsplash">
+                            <img src="../assets/Backgrounds/neda-unsplash-soleado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 3"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 4 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="fondo4.jpg" title="Foto por noaa en Unsplash">
+                            <img src="../assets/Backgrounds/noaa-unsplash-monte.jpg" class="card-img-top rounded img-fluid" alt="Fondo 4"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 5 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="fondo5.jpg" title="Foto por noaa en Unsplash">
+                            <img src="../assets/Backgrounds/noaa-unsplash-tormenta.jpg" class="card-img-top rounded img-fluid" alt="Fondo 5"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Opción 6 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="fondo6.jpg" title="Foto por patrice en Unsplash">
+                            <img src="../assets/Backgrounds/patrice-unsplash-nieve.jpg" class="card-img-top rounded img-fluid" alt="Fondo 6"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-3 text-white small">Fotos obtenidas de Unsplash</p>
+            </div>
+        </div>
+    </div>
+
+    <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script src ="../Code/ajustesCode.js"></script>
 </body>
