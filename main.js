@@ -113,6 +113,35 @@ ipcMain.handle('guardar-ciudad', async (event, nuevaCiudad) => {
     }
 });
 
+//Guarda el fondo seleccionado por el usuario
+ipcMain.handle('guardar-fondo', async (event, nuevoFondo) => {
+    const rutaArchivo = path.join(app.getPath('userData'), 'config-eolotime.json');
+    console.log("Fondo recibido en el backend:", nuevoFondo);
+    
+    let config = {};
+
+    try {
+        // Si ya existe el archivo, leemos su contenido actual
+        if (fs.existsSync(rutaArchivo)) {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            if (contenido.trim() !== "") {
+                config = { ...config, ...JSON.parse(contenido) };
+            }
+        }
+
+        // Actualizamos el fondo con el valor recibido
+        config.background = nuevoFondo;
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, background: config.background };
+    } catch (error) {
+        console.error("Error al guardar el fondo:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 // *LECTURA*
 // Función para leer la Key de OpenWeather
 ipcMain.handle('leer-key', () => {

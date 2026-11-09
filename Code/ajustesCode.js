@@ -115,9 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const galeria = document.getElementById("galeriaFondos");
 
     if (galeria) {
-        galeria.addEventListener("click", (e) => {
+        galeria.addEventListener("click", async(e) => {
             const tarjetaSeleccionada = e.target.closest(".option-fondo");
             if (!tarjetaSeleccionada) return;
+
+            //Obtener el fondo seleccionado
+            const nombreFondo = tarjetaSeleccionada.getAttribute("data-fondo");
+            if (!nombreFondo) return;
+            console.log("Fondo seleccionado:", nombreFondo);
 
             //Quitar la selección a todas las tarjetas
             const todasLasTarjetas = galeria.querySelectorAll(".option-fondo");
@@ -136,9 +141,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const checkActivo = tarjetaSeleccionada.querySelector(".check-icono");
             if (checkActivo) checkActivo.classList.remove("d-none");
 
-            //Obtener el identificador o nombre del fondo seleccionado
-            const idFondo = tarjetaSeleccionada.getAttribute("data-fondo");
-            console.log("Fondo seleccionado (Plantilla Frontend):", idFondo);
+            //Enviar el cambio al Backend para que lo guarde en el JSON
+            try {
+                console.log("Enviando: " +nombreFondo);
+                const resultado = await window.api.guardarFondo(nombreFondo);
+                if (resultado && resultado.success) {
+                    console.log("Fondo guardado con éxito en el JSON:", resultado.background);
+                } else {
+                    console.error("No se pudo guardar el fondo en el JSON:", resultado ? resultado.error : "Respuesta vacía o indefinida");
+                }
+            } catch (error) {
+                console.error("Error al invocar guardar-fondo:", error);
+            }
         });
     }
 });
