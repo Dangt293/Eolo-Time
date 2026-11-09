@@ -163,11 +163,11 @@
                     <!-- Opción 1 -->
                     <div class="col">
                         <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
-                            data-fondo="fondo1.jpg" title="Foto por Click and Learn Photography en Unsplash">
+                            data-fondo="clickAndLearnPhotography-unsplash-arbolNevado.jpg" title="Foto por Click and Learn Photography en Unsplash">
                             <img src="../assets/Backgrounds/clickAndLearnPhotography-unsplash-arbolNevado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 1"
                                 style="height: 150px; object-fit: cover;">
                             <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono">
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
                                 <i class="bi bi-check"></i>
                             </span>
                         </div>
@@ -176,7 +176,7 @@
                     <!-- Opción 2 -->
                     <div class="col">
                         <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
-                            data-fondo="fondo2.jpg" title="Foto por mark en Unsplash">
+                            data-fondo="mark-unsplash-viento.jpg" title="Foto por mark en Unsplash">
                             <img src="../assets/Backgrounds/mark-unsplash-viento.jpg" class="card-img-top rounded img-fluid" alt="Fondo 2"
                                 style="height: 150px; object-fit: cover;">
                             <span
@@ -189,11 +189,11 @@
                     <!-- Opción 3 -->
                     <div class="col">
                         <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
-                            data-fondo="fondo3.jpg" title="Foto por neda en Unsplash">
+                            data-fondo="neda-unsplash-soleado.jpg" title="Foto por neda en Unsplash">
                             <img src="../assets/Backgrounds/neda-unsplash-soleado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 3"
                                 style="height: 150px; object-fit: cover;">
                             <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono">
                                 <i class="bi bi-check"></i>
                             </span>
                         </div>
@@ -202,7 +202,7 @@
                     <!-- Opción 4 -->
                     <div class="col">
                         <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
-                            data-fondo="fondo4.jpg" title="Foto por noaa en Unsplash">
+                            data-fondo="noaa-unsplash-monte.jpg" title="Foto por noaa en Unsplash">
                             <img src="../assets/Backgrounds/noaa-unsplash-monte.jpg" class="card-img-top rounded img-fluid" alt="Fondo 4"
                                 style="height: 150px; object-fit: cover;">
                             <span
@@ -215,7 +215,7 @@
                     <!-- Opción 5 -->
                     <div class="col">
                         <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
-                            data-fondo="fondo5.jpg" title="Foto por noaa en Unsplash">
+                            data-fondo="noaa-unsplash-tormenta.jpg" title="Foto por noaa en Unsplash">
                             <img src="../assets/Backgrounds/noaa-unsplash-tormenta.jpg" class="card-img-top rounded img-fluid" alt="Fondo 5"
                                 style="height: 150px; object-fit: cover;">
                             <span
@@ -228,7 +228,7 @@
                     <!-- Opción 6 -->
                     <div class="col">
                         <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
-                            data-fondo="fondo6.jpg" title="Foto por patrice en Unsplash">
+                            data-fondo="patrice-unsplash-nieve.jpg" title="Foto por patrice en Unsplash">
                             <img src="../assets/Backgrounds/patrice-unsplash-nieve.jpg" class="card-img-top rounded img-fluid" alt="Fondo 6"
                                 style="height: 150px; object-fit: cover;">
                             <span
@@ -245,4 +245,42 @@
 
     <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script src ="../Code/ajustesCode.js"></script>
+    <script>
+        //Para mostrar como seleccionado el fondo que corresponda según el json
+        document.addEventListener("DOMContentLoaded", async () => {
+                try {
+                    const respuesta = await window.api.obtenerFondo();
+
+                    if (respuesta && respuesta.datos) {
+                        const nombreFondoGuardado = respuesta.datos;
+                        const rutaCompleta = `../assets/Backgrounds/${nombreFondoGuardado}`;
+
+                        //Sincronizamos la interfaz de la galería de fondos
+                        const galeria = document.getElementById("galeriaFondos");
+                        if (galeria) {
+                            const tarjetas = galeria.querySelectorAll(".option-fondo");
+
+                            tarjetas.forEach(card => {
+                                const fondoCard = card.getAttribute("data-fondo");
+                                const check = card.querySelector(".check-icono");
+
+                                // Si el data-fondo coincide con el JSON, lo marcamos como activo
+                                if (fondoCard === nombreFondoGuardado) {
+                                    card.classList.remove("border-secondary");
+                                    card.classList.add("border-primary");
+                                    if (check) check.classList.remove("d-none");
+                                } else {
+                                    // Si no coincide, nos aseguramos de que esté desmarcado
+                                    card.classList.remove("border-primary");
+                                    card.classList.add("border-secondary");
+                                    if (check) check.classList.add("d-none");
+                                }
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error al sincronizar el fondo:", error);
+                }
+            });
+    </script>
 </body>
