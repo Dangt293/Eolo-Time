@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('api', {
     getKey: () => ipcRenderer.invoke('leer-key'),
     openExternal: (url) => ipcRenderer.send('abrir-link-externo', url),
     inicializarCiudades: () => ipcRenderer.invoke('inicializar-datos-defecto'),
-    guardarCiudad: (ciudad) => ipcRenderer.invoke('guardar-ciudad', ciudad)
+    guardarCiudad: (ciudad) => ipcRenderer.invoke('guardar-ciudad', ciudad),
+    obtenerFondo: () => ipcRenderer.invoke('obtener-fondo')
 });

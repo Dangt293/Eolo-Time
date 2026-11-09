@@ -148,6 +148,28 @@ ipcMain.handle('inicializar-datos-defecto', async () => {
     return null;
 });
 
+//Inicializa un fondo default o lee el que el usuario eligió
+ipcMain.handle('obtener-fondo', async () => {
+        if (fs.existsSync(rutaArchivo)) {
+        try {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            let config = JSON.parse(contenido);
+
+            // Solo añadimos el fondo si NO existe ya en el JSON
+            if (!config.background) {
+                config.background = "neda-unsplash-soleado.jpg";
+                fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2));
+            }
+            
+            return { status: 'success', datos: config.background };
+        } catch (e) {
+            console.error("Error al inicializar fondo:", e);
+            return null;
+        }
+    }
+    return null;
+});
+
 // *OTROS*
 //Para deridigir a navegador
 ipcMain.on('abrir-link-externo', (event, url) => {
