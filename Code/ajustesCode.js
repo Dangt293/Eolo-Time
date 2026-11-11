@@ -156,3 +156,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+async function obtenerCiudades() {
+    try {
+        const respuesta = await window.api.inicializarCiudades();
+
+        //Validamos que la respuesta y la propiedad 'datos' existan
+        if (!respuesta || !respuesta.datos) {
+            console.error("No se pudieron cargar las ciudades.");
+            return;
+        }
+
+        //Extraemos el array real de ciudades
+        const ciudades = respuesta.datos;
+        let divCiudades = document.getElementById("listaCiudades");
+
+        for (const ciudad of ciudades) {
+            let datos = ciudad.split(",");
+            let divCiudad = `
+                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
+                    draggable="true" id="${ciudad}">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
+                            title="Arrastrar para mover"></i>
+                        <span class="fw-bold">${datos[0]}</span>
+                        <span class="badge bg-secondary text-light">${datos[1]}</span>
+                    </div>
+            
+                    <!-- Controles de acción (Mover arriba, abajo y eliminar) -->
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </li>`;
+
+            divCiudades.innerHTML += divCiudad;
+        }
+    } catch (error) {
+        console.error("Error al obtener las ciudades:", error);
+    }
+}

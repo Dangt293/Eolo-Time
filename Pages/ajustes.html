@@ -66,74 +66,7 @@
             </p>
     
             <!-- Lista de ciudades -->
-            <ul class="list-group list-group-flush bg-transparent" id="listaCiudades">
-            
-                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
-                    draggable="true">
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
-                            title="Arrastrar para mover"></i>
-                        <span class="fw-bold">Madrid</span>
-                        <span class="badge bg-secondary text-light">España</span>
-                    </div>
-            
-                    <!-- Controles de acción (Mover arriba, abajo y eliminar) -->
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
-                            <i class="bi bi-arrow-up"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
-                            <i class="bi bi-arrow-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </li>
-            
-                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
-                    draggable="true">
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
-                            title="Arrastrar para mover"></i>
-                        <span class="fw-bold">Barcelona</span>
-                        <span class="badge bg-secondary text-light">España</span>
-                    </div>
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
-                            <i class="bi bi-arrow-up"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
-                            <i class="bi bi-arrow-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </li>
-            
-                <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between align-items-center py-3"
-                    draggable="true">
-                    <div class="d-flex align-items-center gap-3">
-                        <i class="bi bi-grip-vertical text-white d-none d-md-inline" style="cursor: grab;"
-                            title="Arrastrar para mover"></i>
-                        <span class="fw-bold">Aranjuez</span>
-                        <span class="badge bg-secondary text-light">España</span>
-                    </div>
-            
-                    <!-- Controles de acción (Mover arriba, abajo y eliminar) -->
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-light border-0 btn-subir" title="Mover arriba">
-                            <i class="bi bi-arrow-up"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-light border-0 btn-bajar" title="Mover abajo">
-                            <i class="bi bi-arrow-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger border-0 btn-eliminar" title="Eliminar ciudad">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </li>
+            <ul class="list-group list-group-flush bg-transparent" id="listaCiudades" id = "listaCiudades">
             </ul>
         </div>
     </div>
@@ -246,6 +179,7 @@
     <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script src ="../Code/ajustesCode.js"></script>
     <script>
+        obtenerCiudades();
         //Para mostrar como seleccionado el fondo que corresponda según el json
         document.addEventListener("DOMContentLoaded", async () => {
                 try {
