@@ -1,88 +1,9 @@
-//Configuración de la Api key
 document.addEventListener("DOMContentLoaded", () => {
     //Api key
     const inputApiKey = document.getElementById("inputApiKey");
     const btnToggleVer = document.getElementById("btnToggleVer");
     const iconoOjo = document.getElementById("iconoOjo");
     const btnGuardar = document.getElementById("btnGuardarApiKey");
-    //Listado ciudades
-    const botonesEliminar = document.querySelectorAll(".btn-eliminar");
-    const lista = document.getElementById("listaCiudades");
-    let elementoArrastrado = null;
-
-    //Borrar ciudad
-    botonesEliminar.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const itemLi = e.target.closest("li");
-            if (itemLi) {
-                itemLi.remove();
-                console.log("Ciudad eliminada de la vista");
-            }
-        });
-    });
-
-    //Arrastrar ciudades
-    lista.addEventListener("dragstart", (e) => {
-        elementoArrastrado = e.target.closest("li");
-        if (!elementoArrastrado) return;
-        
-        // Efecto visual de transparencia al arrastrar
-        e.dataTransfer.effectAllowed = "move";
-        setTimeout(() => elementoArrastrado.classList.add("opacity-50"), 0);
-    });
-
-    lista.addEventListener("dragend", (e) => {
-        const item = e.target.closest("li");
-        if (item) {
-            item.classList.remove("opacity-50");
-        }
-        elementoArrastrado = null;
-    });
-
-    lista.addEventListener("dragover", (e) => {
-        e.preventDefault(); // Necesario para permitir soltar elementos
-        e.dataTransfer.dropEffect = "move";
-        
-        const targetLi = e.target.closest("li");
-        
-        // Si estamos sobre otro elemento de la lista que no sea el mismo que arrastramos
-        if (targetLi && targetLi !== elementoArrastrado) {
-            const rect = targetLi.getBoundingClientRect();
-            const offset = e.clientY - rect.top;
-            const middle = rect.height / 2;
-
-            // Si el cursor está en la mitad superior o inferior, reordenamos dinámicamente
-            if (offset > middle) {
-                lista.insertBefore(elementoArrastrado, targetLi.nextSibling);
-            } else {
-                lista.insertBefore(elementoArrastrado, targetLi);
-            }
-        }
-    });
-
-    //Mover con flechas (móviles)
-    lista.addEventListener("click", (e) => {
-        const itemLi = e.target.closest("li");
-        if (!itemLi) return;
-
-        // Botón Subir
-        if (e.target.closest(".btn-subir")) {
-            const elementoAnterior = itemLi.previousElementSibling;
-            if (elementoAnterior) {
-                // Inserta el elemento actual justo antes del anterior
-                lista.insertBefore(itemLi, elementoAnterior);
-            }
-        }
-
-        // Botón Bajar
-        if (e.target.closest(".btn-bajar")) {
-            const elementoSiguiente = itemLi.nextElementSibling;
-            if (elementoSiguiente) {
-                // Inserta el elemento siguiente justo antes del actual para que baje
-                lista.insertBefore(elementoSiguiente, itemLi);
-            }
-        }
-    });
 
     //Botón para descensurar / censurar la API Key
     btnToggleVer.addEventListener("click", () => {
@@ -109,6 +30,115 @@ document.addEventListener("DOMContentLoaded", () => {
         // Aquí más adelante conectarás tu window.api para guardarla en el main/json
         console.log("API Key guardada (Plantilla Frontend):", valorKey);
         alert("¡API Key guardada con éxito (Modo simulación)!");
+    });
+
+    //Listado ciudades
+    const lista = document.getElementById("listaCiudades");
+    let elementoArrastrado = null;
+    let ciudadAEliminar = null;
+    let elementoLiAEliminar = null;
+    const modalElemento = document.getElementById('confirmarModal');
+    const modalConfirmar = new bootstrap.Modal(modalElemento);
+    const spanNombreModal = document.getElementById("nombreCiudadModal");
+    const btnAceptarBorrar = document.getElementById("btnAceptarBorrar");
+
+    //*GESTIÓN DE CLICS EN LA LISTA (Eliminar, Subir, Bajar)
+    lista.addEventListener("click", (e) => {
+        const itemLi = e.target.closest("li");
+        if (!itemLi) return;
+
+        //Botón Eliminar
+        if (e.target.closest(".btn-eliminar")) {
+            ciudadAEliminar = itemLi.getAttribute("id");
+            elementoLiAEliminar = itemLi;
+
+            spanNombreModal.textContent = ciudadAEliminar;
+
+            // Mostramos el modal de Bootstrap
+            modalConfirmar.show();
+            return;
+        }
+
+        //Botón Subir
+        if (e.target.closest(".btn-subir")) {
+            const elementoAnterior = itemLi.previousElementSibling;
+            if (elementoAnterior) {
+                lista.insertBefore(itemLi, elementoAnterior);
+            }
+        }
+
+        //Botón Bajar
+        if (e.target.closest(".btn-bajar")) {
+            const elementoSiguiente = itemLi.nextElementSibling;
+            if (elementoSiguiente) {
+                lista.insertBefore(elementoSiguiente, itemLi);
+            }
+        }
+    });
+
+    //Si se confirma el borrar
+    if (btnAceptarBorrar) {
+        btnAceptarBorrar.addEventListener("click", async () => {
+            if (ciudadAEliminar && elementoLiAEliminar) {
+                console.log("Eliminando ciudad:", ciudadAEliminar);
+
+                try {
+                    //Llamamos al backend para borrarla del json
+                    const resultado = await window.api.eliminarCiudad(ciudadAEliminar);
+
+                    if (resultado && resultado.success) {
+                        console.log("Ciudad eliminada del JSON con éxito.");
+
+                        //La borramos de la vista de usuario solo si se ha borrado correctamente en el json
+                        elementoLiAEliminar.remove();
+                    } else {
+                        console.error("No se pudo eliminar la ciudad del JSON:", resultado ? resultado.error : "Error desconocido");
+                    }
+                } catch (error) {
+                    console.error("Error al invocar eliminar-ciudad:", error);
+                }
+
+                // Limpiamos las variables temporales
+                ciudadAEliminar = null;
+                elementoLiAEliminar = null;
+            }
+        });
+    }
+
+    //Arrastrar las ciudades
+    lista.addEventListener("dragstart", (e) => {
+        elementoArrastrado = e.target.closest("li");
+        if (!elementoArrastrado) return;
+
+        e.dataTransfer.effectAllowed = "move";
+        setTimeout(() => elementoArrastrado.classList.add("opacity-50"), 0);
+    });
+
+    lista.addEventListener("dragend", (e) => {
+        const item = e.target.closest("li");
+        if (item) {
+            item.classList.remove("opacity-50");
+        }
+        elementoArrastrado = null;
+    });
+
+    lista.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+
+        const targetLi = e.target.closest("li");
+
+        if (targetLi && targetLi !== elementoArrastrado) {
+            const rect = targetLi.getBoundingClientRect();
+            const offset = e.clientY - rect.top;
+            const middle = rect.height / 2;
+
+            if (offset > middle) {
+                lista.insertBefore(elementoArrastrado, targetLi.nextSibling);
+            } else {
+                lista.insertBefore(elementoArrastrado, targetLi);
+            }
+        }
     });
 
     //Galería de fondos

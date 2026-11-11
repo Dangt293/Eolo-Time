@@ -113,6 +113,34 @@ ipcMain.handle('guardar-ciudad', async (event, nuevaCiudad) => {
     }
 });
 
+// Elimina una ciudad del array ciudadesDefault en el JSON
+ipcMain.handle('eliminar-ciudad', async (event, ciudadAEliminar) => {
+    try {
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+
+        if (!fs.existsSync(rutaArchivo)) {
+            return { success: false, error: "El archivo de configuración no existe" };
+        }
+
+        const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+        let config = JSON.parse(contenido);
+
+        // Si existe el array, filtramos para quitar la ciudad seleccionada
+        if (config.ciudadesDefault && Array.isArray(config.ciudadesDefault)) {
+            config.ciudadesDefault = config.ciudadesDefault.filter(c => c !== ciudadAEliminar);
+        }
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, ciudades: config.ciudadesDefault };
+    } catch (error) {
+        console.error("Error al eliminar la ciudad:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 //Guarda el fondo seleccionado por el usuario
 ipcMain.handle('guardar-fondo', async (event, nuevoFondo) => {
     const rutaArchivo = path.join(app.getPath('userData'), 'config-eolotime.json');

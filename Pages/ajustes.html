@@ -176,6 +176,26 @@
         </div>
     </div>
 
+    <!-- Modal Confirmación-->
+    <div class="modal fade" id="confirmarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmarModalLabel">Confirmar borrado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar <span id="nombreCiudadModal" class="fw-bold text-warning"></span> de tu lista?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info" id="btnAceptarBorrar" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script src ="../Code/ajustesCode.js"></script>
     <script>
