@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('api', {
     inicializarCiudades: () => ipcRenderer.invoke('inicializar-datos-defecto'),
     guardarCiudad: (ciudad) => ipcRenderer.invoke('guardar-ciudad', ciudad),
     eliminarCiudad: (ciudad) => ipcRenderer.invoke('eliminar-ciudad', ciudad),
+    guardarOrdenCiudades: (nuevoOrden) => ipcRenderer.invoke('guardar-orden-ciudades', nuevoOrden),
     obtenerFondo: () => ipcRenderer.invoke('obtener-fondo'),
     guardarFondo: (nombreFondo) => ipcRenderer.invoke('guardar-fondo', nombreFondo)
 });

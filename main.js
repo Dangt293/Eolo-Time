@@ -205,6 +205,33 @@ ipcMain.handle('inicializar-datos-defecto', async () => {
     return null;
 });
 
+// Guarda el nuevo orden de las ciudades en el JSON
+ipcMain.handle('guardar-orden-ciudades', async (event, nuevasCiudades) => {
+    try {
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+        
+        let config = {};
+        if (fs.existsSync(rutaArchivo)) {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            if (contenido.trim() !== "") {
+                config = JSON.parse(contenido);
+            }
+        }
+
+        // Actualizamos el array de ciudades con el nuevo orden recibido
+        config.ciudadesDefault = nuevasCiudades;
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, ciudades: config.ciudadesDefault };
+    } catch (error) {
+        console.error("Error al guardar el orden de las ciudades:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 //Inicializa un fondo default o lee el que el usuario eligió
 ipcMain.handle('obtener-fondo', async () => {
         if (fs.existsSync(rutaArchivo)) {

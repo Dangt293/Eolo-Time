@@ -43,9 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAceptarBorrar = document.getElementById("btnAceptarBorrar");
 
     //*GESTIÓN DE CLICS EN LA LISTA (Eliminar, Subir, Bajar)
-    lista.addEventListener("click", (e) => {
+    lista.addEventListener("click", async (e) => {
         const itemLi = e.target.closest("li");
         if (!itemLi) return;
+
+        let huboCambio = false;
 
         //Botón Eliminar
         if (e.target.closest(".btn-eliminar")) {
@@ -64,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const elementoAnterior = itemLi.previousElementSibling;
             if (elementoAnterior) {
                 lista.insertBefore(itemLi, elementoAnterior);
+                huboCambio = true;
             }
         }
 
@@ -72,7 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const elementoSiguiente = itemLi.nextElementSibling;
             if (elementoSiguiente) {
                 lista.insertBefore(elementoSiguiente, itemLi);
+                huboCambio = true;
             }
+        }
+
+        if (huboCambio) {
+            await sincronizarOrdenConBackend();
         }
     });
 
@@ -114,12 +122,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => elementoArrastrado.classList.add("opacity-50"), 0);
     });
 
-    lista.addEventListener("dragend", (e) => {
+    lista.addEventListener("dragend", async (e) => {
         const item = e.target.closest("li");
         if (item) {
             item.classList.remove("opacity-50");
         }
         elementoArrastrado = null;
+        await sincronizarOrdenConBackend(); //Guardamos el nuevo orden
     });
 
     lista.addEventListener("dragover", (e) => {
@@ -231,5 +240,30 @@ async function obtenerCiudades() {
         }
     } catch (error) {
         console.error("Error al obtener las ciudades:", error);
+    }
+}
+
+// Extrae el array de ciudades ordenadas del HTML
+function obtenerCiudadesDesdeDOM() {
+    const items = document.querySelectorAll("#listaCiudades li");
+    const ciudadesOrdenadas = [];
+    items.forEach(item => {
+        ciudadesOrdenadas.push(item.getAttribute("id"));
+    });
+    return ciudadesOrdenadas;
+}
+
+// Función para enviar el nuevo orden al backend
+async function sincronizarOrdenConBackend() {
+    const nuevasCiudades = obtenerCiudadesDesdeDOM();
+    try {
+        const resultado = await window.api.guardarOrdenCiudades(nuevasCiudades);
+        if (resultado && resultado.success) {
+            console.log("Orden de ciudades actualizado en el JSON:", resultado.ciudades);
+        } else {
+            console.error("No se pudo guardar el orden:", resultado ? resultado.error : "Error desconocido");
+        }
+    } catch (error) {
+        console.error("Error al invocar guardar-orden-ciudades:", error);
     }
 }
