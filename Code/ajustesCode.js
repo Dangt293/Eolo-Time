@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     //Api key
     const inputApiKey = document.getElementById("inputApiKey");
     const btnToggleVer = document.getElementById("btnToggleVer");
     const iconoOjo = document.getElementById("iconoOjo");
-    const btnGuardar = document.getElementById("btnGuardarApiKey");
+
+    inputApiKey.value = await obtenerApi(); //Obtiene la key real de la configuración del usuario
 
     //Botón para descensurar / censurar la API Key
     btnToggleVer.addEventListener("click", () => {
@@ -16,20 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
             iconoOjo.classList.remove("bi-eye-slash");
             iconoOjo.classList.add("bi-eye");
         }
-    });
-
-    //Botón para guardar
-    btnGuardar.addEventListener("click", () => {
-        const valorKey = inputApiKey.value.trim();
-
-        if (!valorKey) {
-            alert("Por favor, introduce una API Key válida.");
-            return;
-        }
-
-        // Aquí más adelante conectarás tu window.api para guardarla en el main/json
-        console.log("API Key guardada (Plantilla Frontend):", valorKey);
-        alert("¡API Key guardada con éxito (Modo simulación)!");
     });
 
     //Listado ciudades
@@ -195,6 +182,40 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+//Obtiene la API Key de la configuración de usuario
+async function obtenerApi() {
+    try {
+        const resultado = await window.api.getKey(); 
+        
+        if (resultado) {
+            return resultado
+        }else {
+            console.log("Error al obtener la API Key");
+        }
+    } catch (error) {
+        console.error("Error al cargar la API Key en el input:", error);
+    }
+}
+
+//Guarda la API Key introducida en la configuración de usuario
+async function guardarKey() {
+    const inputApiKey = document.getElementById("inputApiKey");
+
+    try {
+        const nuevaKey = inputApiKey.value.trim();
+        const resultado = await window.api.saveKey(nuevaKey); 
+        
+        if (resultado && resultado.success) {
+            console.log("API Key guardada con éxito en el JSON!");
+        }else {
+            const mensajeError = resultado ? resultado.error : "Respuesta vacía del backend";
+            console.error("No se pudo guardar la API Key. Motivo:", mensajeError);
+        }
+    } catch (error) {
+        console.error("Error al guardar la API Key:", error);
+    }
+}
 
 async function obtenerCiudades() {
     try {

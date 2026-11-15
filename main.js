@@ -42,7 +42,7 @@ app.on('window-all-closed', () => {
 
 // *ESCRITURA*
 // Función para guardar la Key de OpenWeather
-ipcMain.on('guardar-key', (event, key) => {
+ipcMain.handle('guardar-key', (event, key) => {
     const carpetaUsuario = app.getPath('userData');
     const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
     
@@ -61,8 +61,15 @@ ipcMain.on('guardar-key', (event, key) => {
     // Modificamos SOLO el campo de la API Key, manteniendo el resto
     configuracionExistente.apiKey = key;
 
-    //Guardamos el objeto completo de nuevo
-    fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2)); // El 'null, 2' hace que el JSON sea legible
+    try {
+        // Guardamos el objeto completo de nuevo
+        fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2));
+        
+        return { success: true, apiKey: configuracionExistente.apiKey };
+    } catch (error) {
+        console.error("Error al escribir el archivo de configuración:", error);
+        return { success: false, error: error.message };
+    }
 });
 
 //Guarda en el array de ciudades una nueva

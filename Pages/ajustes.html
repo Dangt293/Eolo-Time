@@ -39,7 +39,7 @@
                 <label for="inputApiKey" class="form-label">API Key</label>
                 <div class="input-group">
                     <!-- Censurada por defecto -->
-                    <input type="password" class="form-control bg-secondary text-white border-secondary" id="inputApiKey" value="12345abcdeMockKeyOpenWeather" placeholder="Introduce tu API Key">
+                    <input type="password" class="form-control bg-secondary text-white border-secondary" id="inputApiKey" value="" placeholder="Introduce tu API Key">
                     
                     <!-- Botón para descensurar / censurar -->
                     <button class="btn btn-outline-light" type="button" id="btnToggleVer" title="Mostrar/Ocultar API Key">
@@ -51,7 +51,7 @@
 
             <!-- Botón de acción -->
             <div class="d-flex gap-2">
-                <button type="button" class="btn btn-primary" id="btnGuardarApiKey">
+                <button type="button" class="btn btn-primary" id="btnGuardarApiKey" onclick="guardarKey()">
                     <i class="bi bi-save"></i> Guardar Nueva API Key
                 </button>
             </div>
@@ -200,6 +200,7 @@
     <script src ="../Code/ajustesCode.js"></script>
     <script>
         obtenerCiudades();
+
         //Para mostrar como seleccionado el fondo que corresponda según el json
         document.addEventListener("DOMContentLoaded", async () => {
                 try {
