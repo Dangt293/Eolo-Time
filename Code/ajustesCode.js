@@ -207,14 +207,30 @@ async function guardarKey() {
         const resultado = await window.api.saveKey(nuevaKey); 
         
         if (resultado && resultado.success) {
+            mostrarMensaje();
             console.log("API Key guardada con éxito en el JSON!");
         }else {
             const mensajeError = resultado ? resultado.error : "Respuesta vacía del backend";
-            console.error("No se pudo guardar la API Key. Motivo:", mensajeError);
+            mostrarError("No se pudo guardar la API Key. Motivo:", mensajeError);
         }
     } catch (error) {
         console.error("Error al guardar la API Key:", error);
     }
+}
+
+//Muestra el modal si se guarda correctamente
+function mostrarMensaje() {
+    const myModal = new bootstrap.Modal(document.getElementById('guardarModal'));
+    myModal.show();
+}
+
+//Muestra el modal si algo falla
+function mostrarError(error) {
+    const modalCuerpo = document.querySelector('#errorModal .modal-body');
+    modalCuerpo.innerHTML = '<p>'+error+'</p>';
+
+    const myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    myModal.show();
 }
 
 async function obtenerCiudades() {
