@@ -42,33 +42,46 @@ app.on('window-all-closed', () => {
 
 // *ESCRITURA*
 // Función para guardar la Key de OpenWeather
-ipcMain.handle('guardar-key', (event, key) => {
-    const carpetaUsuario = app.getPath('userData');
-    const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
-    
-    let configuracionExistente = {};
-
-    //Intentamos leer lo que ya existe
-    if (fs.existsSync(rutaArchivo)) {
-        try {
-            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
-            configuracionExistente = JSON.parse(contenido);
-        } catch (e) {
-            console.error("Error al leer el archivo actual, se creará uno nuevo.");
-        }
+ipcMain.handle('guardar-key', async(event, key) => {
+    if (!key || key.trim() === "") {
+        return { success: false, error: "La API Key no puede estar vacía." };
     }
 
-    // Modificamos SOLO el campo de la API Key, manteniendo el resto
-    configuracionExistente.apiKey = key;
+    //Hacemos una llamada a OpenWeather para probar si la api key es válida
+    const urlPrueba = `https://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=${key}`;
 
     try {
-        // Guardamos el objeto completo de nuevo
+        const respuesta = await fetch(urlPrueba);
+        
+        // Si OpenWeather responde con un código distinto a 200, la key es inválida
+        if (!respuesta.ok) {
+            return { success: false, error: `Error al validar la API Key (Código: ${respuesta.status})` };
+        }
+
+        //Si la key es VÁLIDA, procedemos a guardarla en el JSON
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+        
+        let configuracionExistente = {};
+        //Intentamos leer lo que ya existe
+        if (fs.existsSync(rutaArchivo)) {
+            try {
+                const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+                configuracionExistente = JSON.parse(contenido);
+            } catch (e) {
+                console.error("Error al leer el archivo actual, se creará uno nuevo.");
+            }
+        }
+        // Modificamos SOLO el campo de la API Key, manteniendo el resto
+        configuracionExistente.apiKey = key;
+
         fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2));
         
         return { success: true, apiKey: configuracionExistente.apiKey };
+
     } catch (error) {
-        console.error("Error al escribir el archivo de configuración:", error);
-        return { success: false, error: error.message };
+        console.error("Error de red al intentar validar la API Key:", error);
+        return { success: false, error: "No se pudo conectar con OpenWeather para validar la key." };
     }
 });
 

@@ -211,7 +211,7 @@ async function guardarKey() {
             console.log("API Key guardada con éxito en el JSON!");
         }else {
             const mensajeError = resultado ? resultado.error : "Respuesta vacía del backend";
-            mostrarError("No se pudo guardar la API Key. Motivo:", mensajeError);
+            mostrarError(mensajeError);
         }
     } catch (error) {
         console.error("Error al guardar la API Key:", error);
@@ -227,7 +227,7 @@ function mostrarMensaje() {
 //Muestra el modal si algo falla
 function mostrarError(error) {
     const modalCuerpo = document.querySelector('#errorModal .modal-body');
-    modalCuerpo.innerHTML = '<p>'+error+'</p>';
+    modalCuerpo.innerHTML = '<p>No se pudo guardar la API Key. Motivo:'+error+'</p>';
 
     const myModal = new bootstrap.Modal(document.getElementById('errorModal'));
     myModal.show();
