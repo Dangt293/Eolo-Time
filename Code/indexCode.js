@@ -24,7 +24,7 @@ async function comprobarApi() {
         //Comprobamos que existan las ciudades en el JSON
         const resultado = await window.api.inicializarCiudades();
         
-        if (resultado && resultado.datos) {
+        if (resultado && resultado.datos && resultado.datos.length > 0) {
             //Limpiamos el contenedor por si acaso
             document.getElementById('ciudadesCards').innerHTML = '';
             
@@ -32,6 +32,8 @@ async function comprobarApi() {
             for (const ciudad of resultado.datos) {
                 await obtenerClima(ciudad); // El 'await' aquí obliga a esperar a que termine una para ir a la otra, manteniendo el orden
             }
+        }else {
+            document.getElementById('sinCiudades').classList.remove('d-none');
         }
     }
 }
@@ -85,7 +87,8 @@ async function aniadirCiudad() {
             modal.hide();
 
             // Recargamos el dashboard para que aparezca la nueva tarjeta
-            obtenerClima(ciudadBuscada); 
+            obtenerClima(ciudadBuscada);
+            document.getElementById('sinCiudades').classList.add('d-none'); //Quitamos el bloque de aviso
         } else {
             throw new Error("Hubo un error al guardar la ciudad en el disco.");
         }

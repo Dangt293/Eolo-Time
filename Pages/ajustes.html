@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eolo-Time | Ajustes</title>
+    <!-- Favicono -->
+    <link rel="icon" type="image/x-icon" href="../assets/Favicono.ico">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../Boostrap/Icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../Boostrap/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../Styles/estilosBase.css">
+    <link rel="stylesheet" href="../Styles/ajustesStyles.css">
+</head>
+
+<body>
+    <!-- *Cabecera* -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container-fluid px-4">
+        <div class="navbar-brand">
+            <img src="../assets/Logo.png" alt="Eolo-Time" width="70" height="60" class="d-inline-block imgLogo">
+            <span class="d-inline-block">Eolo-Time</span>
+        </div>
+        <div class="ms-auto">
+            <a href = "../index.html" id="volver" class="badge back-buttom"><i class="bi bi-arrow-left"></i> Volver al inicio</a>
+        </div>
+        </div>
+    </nav>
+
+    <!-- *Body* -->
+
+    <!--*API KEY*-->
+    <div class="card text-white border-primary mt-3 mx-3 mx-md-5">
+        <div class="card-body cardConfig">
+            <h5 class="card-title mb-3"><i class="bi bi-key-fill"></i> Configuración de OpenWeather API</h5>
+            
+            <div class="mb-3">
+                <label for="inputApiKey" class="form-label">API Key</label>
+                <div class="input-group">
+                    <!-- Censurada por defecto -->
+                    <input type="password" class="form-control bg-secondary text-white border-secondary" id="inputApiKey" value="" placeholder="Introduce tu API Key">
+                    
+                    <!-- Botón para descensurar / censurar -->
+                    <button class="btn btn-outline-light" type="button" id="btnToggleVer" title="Mostrar/Ocultar API Key">
+                        <i class="bi bi-eye" id="iconoOjo"></i>
+                    </button>
+                </div>
+                <div class="form-text text-white">Tu clave se utiliza para realizar las peticiones al servicio de OpenWeather y quedara guardada únicamente de manera local en tu dispositivo.</div>
+            </div>
+
+            <!-- Botón de acción -->
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-primary" id="btnGuardarApiKey" onclick="guardarKey()">
+                    <i class="bi bi-save"></i> Guardar Nueva API Key
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--*Ciudades*-->
+    <div class="card text-white border-primary mt-3 mx-3 mx-md-5">
+        <div class="card-body cardConfig">
+            <h5 class="card-title mb-3"><i class="bi bi-list-nested"></i> Gestionar Ciudades</h5>
+            <p class="card-text text-white small">Arrastra desde los puntos para reordenar o usa las flechas. Haz click en la papelera para eliminar.
+            </p>
+    
+            <!-- Lista de ciudades -->
+            <ul class="list-group list-group-flush bg-transparent" id="listaCiudades" id = "listaCiudades">
+            </ul>
+        </div>
+    </div>
+
+    <!--*Fondo pantalla*-->
+    <div class="card bg-dark text-white border-secondary mt-3 mb-3 mx-3 mx-md-5">
+        <div class="card-body cardConfig">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="card-title mb-1"><i class="bi bi-image"></i> Fondo de Pantalla</h5>
+                    <p class="card-text text-white small mb-0">Personaliza la apariencia del dashboard.</p>
+                </div>
+                <!-- Botón que activa el desplegable -->
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFondos" aria-expanded="false" aria-controls="collapseFondos">
+                    <i class="bi bi-palette"></i> Cambiar fondo
+                </button>
+            </div>
+    
+            <!-- Contenido Desplegable (Collapse) -->
+            <div class="collapse mt-4" id="collapseFondos">
+                <hr class="border-secondary mb-4">
+                <h6 class="mb-3 text-white">Selecciona una imagen:</h6>
+    
+                <div class="row row-cols-2 row-cols-md-4 g-3" id="galeriaFondos">
+    
+                    <!-- Opción 1 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="clickAndLearnPhotography-unsplash-arbolNevado.jpg" title="Foto por Click and Learn Photography en Unsplash">
+                            <img src="../assets/Backgrounds/clickAndLearnPhotography-unsplash-arbolNevado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 1"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 2 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="mark-unsplash-viento.jpg" title="Foto por mark en Unsplash">
+                            <img src="../assets/Backgrounds/mark-unsplash-viento.jpg" class="card-img-top rounded img-fluid" alt="Fondo 2"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 3 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="neda-unsplash-soleado.jpg" title="Foto por neda en Unsplash">
+                            <img src="../assets/Backgrounds/neda-unsplash-soleado.jpg" class="card-img-top rounded img-fluid" alt="Fondo 3"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 4 -->
+                    <div class="col">
+                        <div class="card bg-dark border-secondary option-fondo position-relative style-pointer"
+                            data-fondo="noaa-unsplash-monte.jpg" title="Foto por noaa en Unsplash">
+                            <img src="../assets/Backgrounds/noaa-unsplash-monte.jpg" class="card-img-top rounded img-fluid" alt="Fondo 4"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <!-- Opción 5 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="noaa-unsplash-tormenta.jpg" title="Foto por noaa en Unsplash">
+                            <img src="../assets/Backgrounds/noaa-unsplash-tormenta.jpg" class="card-img-top rounded img-fluid" alt="Fondo 5"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Opción 6 -->
+                    <div class="col">
+                        <div class="card bg-dark border-primary option-fondo position-relative style-pointer"
+                            data-fondo="patrice-unsplash-nieve.jpg" title="Foto por patrice en Unsplash">
+                            <img src="../assets/Backgrounds/patrice-unsplash-nieve.jpg" class="card-img-top rounded img-fluid" alt="Fondo 6"
+                                style="height: 150px; object-fit: cover;">
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary check-icono d-none">
+                                <i class="bi bi-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-3 text-white small">Fotos obtenidas de Unsplash</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación-->
+    <div class="modal fade" id="confirmarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmarModalLabel">Confirmar borrado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar <span id="nombreCiudadModal" class="fw-bold text-warning"></span> de tu lista?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info" id="btnAceptarBorrar" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación-->
+    <div class="modal fade" id="guardarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="guardarModalLabel">Guardado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>La Api Key se ha guardado correctamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Error-->
+    <div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="errorModalLabel">Error</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
+    <script src ="../Code/ajustesCode.js"></script>
+    <script>
+        obtenerCiudades();
+
+        //Para mostrar como seleccionado el fondo que corresponda según el json
+        document.addEventListener("DOMContentLoaded", async () => {
+                try {
+                    const respuesta = await window.api.obtenerFondo();
+
+                    if (respuesta && respuesta.datos) {
+                        const nombreFondoGuardado = respuesta.datos;
+                        const rutaCompleta = `../assets/Backgrounds/${nombreFondoGuardado}`;
+
+                        //Sincronizamos la interfaz de la galería de fondos
+                        const galeria = document.getElementById("galeriaFondos");
+                        if (galeria) {
+                            const tarjetas = galeria.querySelectorAll(".option-fondo");
+
+                            tarjetas.forEach(card => {
+                                const fondoCard = card.getAttribute("data-fondo");
+                                const check = card.querySelector(".check-icono");
+
+                                // Si el data-fondo coincide con el JSON, lo marcamos como activo
+                                if (fondoCard === nombreFondoGuardado) {
+                                    card.classList.remove("border-secondary");
+                                    card.classList.add("border-primary");
+                                    if (check) check.classList.remove("d-none");
+                                } else {
+                                    // Si no coincide, nos aseguramos de que esté desmarcado
+                                    card.classList.remove("border-primary");
+                                    card.classList.add("border-secondary");
+                                    if (check) check.classList.add("d-none");
+                                }
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error al sincronizar el fondo:", error);
+                }
+            });
+    </script>
+</body>

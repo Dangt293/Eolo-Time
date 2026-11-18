@@ -50,6 +50,46 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Confirmación-->
+    <div class="modal fade" id="guardarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="guardarModalLabel">Guardado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>La Api Key se ha guardado correctamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal" onclick="window.location.href = '../index.html'">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Error-->
+    <div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="errorModalLabel">Error</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src = "../Boostrap/JS/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
         
@@ -77,11 +117,28 @@
                 return;
             }
 
-            window.api.saveKey(key);
-            
-            // Feedback visual y reinicio
-            alert("¡Configuración guardada correctamente!");
-            window.location.href = "../index.html";
+            let resultado = await window.api.saveKey(key);
+
+            if (resultado && resultado.success) {
+                mostrarMensaje();
+            }else {
+                const mensajeError = resultado ? resultado.error : "Respuesta vacía del backend";
+                mostrarError(mensajeError);
+            }            
+        }
+
+        //Muestra el modal si algo falla
+        function mostrarError(error) {
+            const modalCuerpo = document.querySelector('#errorModal .modal-body');
+            modalCuerpo.innerHTML = '<p>No se pudo guardar la API Key. Motivo:'+error+'</p>';
+
+            const myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            myModal.show();
+        }
+
+        function mostrarMensaje() {
+            const myModal = new bootstrap.Modal(document.getElementById('guardarModal'));
+            myModal.show();
         }
     </script>
 </body>

@@ -42,27 +42,47 @@ app.on('window-all-closed', () => {
 
 // *ESCRITURA*
 // Función para guardar la Key de OpenWeather
-ipcMain.on('guardar-key', (event, key) => {
-    const carpetaUsuario = app.getPath('userData');
-    const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
-    
-    let configuracionExistente = {};
-
-    //Intentamos leer lo que ya existe
-    if (fs.existsSync(rutaArchivo)) {
-        try {
-            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
-            configuracionExistente = JSON.parse(contenido);
-        } catch (e) {
-            console.error("Error al leer el archivo actual, se creará uno nuevo.");
-        }
+ipcMain.handle('guardar-key', async(event, key) => {
+    if (!key || key.trim() === "") {
+        return { success: false, error: "La API Key no puede estar vacía." };
     }
 
-    // Modificamos SOLO el campo de la API Key, manteniendo el resto
-    configuracionExistente.apiKey = key;
+    //Hacemos una llamada a OpenWeather para probar si la api key es válida
+    const urlPrueba = `https://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=${key}`;
 
-    //Guardamos el objeto completo de nuevo
-    fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2)); // El 'null, 2' hace que el JSON sea legible
+    try {
+        const respuesta = await fetch(urlPrueba);
+        
+        // Si OpenWeather responde con un código distinto a 200, la key es inválida
+        if (!respuesta.ok) {
+            return { success: false, error: `Error al validar la API Key (Código: ${respuesta.status})` };
+        }
+
+        //Si la key es VÁLIDA, procedemos a guardarla en el JSON
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+        
+        let configuracionExistente = {};
+        //Intentamos leer lo que ya existe
+        if (fs.existsSync(rutaArchivo)) {
+            try {
+                const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+                configuracionExistente = JSON.parse(contenido);
+            } catch (e) {
+                console.error("Error al leer el archivo actual, se creará uno nuevo.");
+            }
+        }
+        // Modificamos SOLO el campo de la API Key, manteniendo el resto
+        configuracionExistente.apiKey = key;
+
+        fs.writeFileSync(rutaArchivo, JSON.stringify(configuracionExistente, null, 2));
+        
+        return { success: true, apiKey: configuracionExistente.apiKey };
+
+    } catch (error) {
+        console.error("Error de red al intentar validar la API Key:", error);
+        return { success: false, error: "No se pudo conectar con OpenWeather para validar la key." };
+    }
 });
 
 //Guarda en el array de ciudades una nueva
@@ -113,6 +133,63 @@ ipcMain.handle('guardar-ciudad', async (event, nuevaCiudad) => {
     }
 });
 
+// Elimina una ciudad del array ciudadesDefault en el JSON
+ipcMain.handle('eliminar-ciudad', async (event, ciudadAEliminar) => {
+    try {
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+
+        if (!fs.existsSync(rutaArchivo)) {
+            return { success: false, error: "El archivo de configuración no existe" };
+        }
+
+        const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+        let config = JSON.parse(contenido);
+
+        // Si existe el array, filtramos para quitar la ciudad seleccionada
+        if (config.ciudadesDefault && Array.isArray(config.ciudadesDefault)) {
+            config.ciudadesDefault = config.ciudadesDefault.filter(c => c !== ciudadAEliminar);
+        }
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, ciudades: config.ciudadesDefault };
+    } catch (error) {
+        console.error("Error al eliminar la ciudad:", error);
+        return { success: false, error: error.message };
+    }
+});
+
+//Guarda el fondo seleccionado por el usuario
+ipcMain.handle('guardar-fondo', async (event, nuevoFondo) => {
+    const rutaArchivo = path.join(app.getPath('userData'), 'config-eolotime.json');
+    console.log("Fondo recibido en el backend:", nuevoFondo);
+    
+    let config = {};
+
+    try {
+        // Si ya existe el archivo, leemos su contenido actual
+        if (fs.existsSync(rutaArchivo)) {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            if (contenido.trim() !== "") {
+                config = { ...config, ...JSON.parse(contenido) };
+            }
+        }
+
+        // Actualizamos el fondo con el valor recibido
+        config.background = nuevoFondo;
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, background: config.background };
+    } catch (error) {
+        console.error("Error al guardar el fondo:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 // *LECTURA*
 // Función para leer la Key de OpenWeather
 ipcMain.handle('leer-key', () => {
@@ -142,6 +219,55 @@ ipcMain.handle('inicializar-datos-defecto', async () => {
             return { status: 'existian', datos: config.ciudadesDefault };
         } catch (e) {
             console.error("Error al inicializar datos:", e);
+            return null;
+        }
+    }
+    return null;
+});
+
+// Guarda el nuevo orden de las ciudades en el JSON
+ipcMain.handle('guardar-orden-ciudades', async (event, nuevasCiudades) => {
+    try {
+        const carpetaUsuario = app.getPath('userData');
+        const rutaArchivo = path.join(carpetaUsuario, 'config-eolotime.json');
+        
+        let config = {};
+        if (fs.existsSync(rutaArchivo)) {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            if (contenido.trim() !== "") {
+                config = JSON.parse(contenido);
+            }
+        }
+
+        // Actualizamos el array de ciudades con el nuevo orden recibido
+        config.ciudadesDefault = nuevasCiudades;
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, ciudades: config.ciudadesDefault };
+    } catch (error) {
+        console.error("Error al guardar el orden de las ciudades:", error);
+        return { success: false, error: error.message };
+    }
+});
+
+//Inicializa un fondo default o lee el que el usuario eligió
+ipcMain.handle('obtener-fondo', async () => {
+        if (fs.existsSync(rutaArchivo)) {
+        try {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            let config = JSON.parse(contenido);
+
+            // Solo añadimos el fondo si NO existe ya en el JSON
+            if (!config.background) {
+                config.background = "neda-unsplash-soleado.jpg";
+                fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2));
+            }
+            
+            return { status: 'success', datos: config.background };
+        } catch (e) {
+            console.error("Error al inicializar fondo:", e);
             return null;
         }
     }
