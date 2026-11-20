@@ -205,13 +205,14 @@ function obtenerPronosticoHoras(forecast) {
         
         const temp = Math.round(tramo.main.temp);
         const codIcono = tramo.weather[0].icon;
+        const titulo = tramo.weather[0].description;
 
         const icono = obtenerIconoBootstrap(codIcono);
 
         html += `
             <div class="hourly-item">
                 <small class="text-white-50">${hora}</small>
-                    <i class = "bi ${icono} d-block my-2 fs-4"></i>
+                    <i class = "bi ${icono} d-block my-2 fs-4" title = "${titulo}"></i>
                     <strong>${temp}°</strong>
             </div>
         `;
