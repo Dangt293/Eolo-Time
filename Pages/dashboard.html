@@ -158,6 +158,21 @@
     <script src = "../Code/dashboardCode.js"></script>
     <script>
         setInterval(actualizarFecha, 1000);
+
+        document.addEventListener("keydown", (e) => {
+            // Comprobamos si el usuario pulsa la tecla Ctrl (o Cmd en Mac)
+            if (e.ctrlKey || e.metaKey) {
+                
+                //Ctrl + C -> Ir a la página de ajustes
+                if (e.key === 'c' || e.key === 'C') {
+                    e.preventDefault(); // Evitamos acciones por defecto
+                    
+                    // Redirigimos a la vista de ajustes
+                    window.location.href = '../Pages/ajustes.html'; 
+                    console.log("Atajo Ctrl + C detectado: Redirigiendo a ajustes");
+                }
+            }
+        });
     </script>
 </body>
 
