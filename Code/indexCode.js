@@ -43,9 +43,15 @@ async function aniadirCiudad() {
     const modalElement = document.getElementById('nuevaCiudadModal');
     const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
     const ciudadBuscada = document.getElementById("ciudadNueva").value;
+    const validarCiudad  = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,},\s*[A-ZÑ]{2}$/
 
     if (!ciudadBuscada) {
         alert("Por favor, introduce una ciudad.");
+        return;
+    }
+
+    if(!validarCiudad.test(ciudadBuscada)) {
+        mostrarMensaje("El formato introducido no cumple las condiciones válidas");
         return;
     }
 
