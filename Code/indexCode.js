@@ -36,6 +36,8 @@ async function comprobarApi() {
             document.getElementById('sinCiudades').classList.remove('d-none');
         }
     }
+
+    comprobarModo();
 }
 
 async function comprobarModo() {
@@ -43,10 +45,30 @@ async function comprobarModo() {
     console.log("Modo fuente: "+modo.datos);
     switch (modo.datos) {
         case "Normal":
+            //No hay que hacer nada
             break;
         case "Claro":
+            //Seleccionamos todos los elementos ha cambiar de las cards
+            let elementos = document.querySelectorAll('.ciudad');
+
+            elementos.forEach(elemento => {
+                elemento.classList.add("bright");
+            });
+
+            elementos = document.querySelectorAll('.temp-main');
+
+            elementos.forEach(elemento => {
+                elemento.classList.add("bright");
+            });
+
+            elementos = document.querySelectorAll('.text-capitalize');
+
+            elementos.forEach(elemento => {
+                elemento.classList.add("bright");
+            });
             break;
         case "Oscuro":
+            document.getElementById("encabezado").classList.add("dark");
             break;
     }
 }
@@ -181,7 +203,7 @@ function mostrarClima(datos, ciudadSolicitada) {
         <div class="card h-100 glass-card p-2 position-relative"> 
         <div class="d-flex justify-content-between align-items-start">
             <div>
-            <h4 class="mb-0">${ciudad}</h4>
+            <h4 class="ciudad mb-0">${ciudad}</h4>
             <small class="text-white-50">${pais}</small>
             </div>
         </div>

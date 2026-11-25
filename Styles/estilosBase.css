@@ -21,6 +21,7 @@
     /* Colores */
         --blanco: #FFFFFF;
         --enfasis: rgba(255, 255, 255, .8);
+        --oscuro: #212529;
     /* Letras */
         --font-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         --font-secundaria: 'Inter', sans-serif;

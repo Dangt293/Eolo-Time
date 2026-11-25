@@ -100,3 +100,13 @@ body {
 .text-white-50 {
     color: var(--enfasis) !important;
 }
+
+/** Modo oscuro **/
+.dark {
+    color: var(--oscuro) !important;
+}
+
+/** Modo claro **/
+.bright {
+    color: var(--blanco) !important;
+}
