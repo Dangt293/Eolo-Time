@@ -181,6 +181,38 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
+
+    //Modos de visualización
+    try {
+        // console.log("Evaluando modoFuente");
+        //Pedimos la configuración actual al backend
+        const resultado = await window.api.getModoFuente();
+
+        if (resultado && resultado.success && resultado.datos) {
+            const modoGuardado = resultado.datos;
+            
+            //Buscamos el input radio que coincide con ese ID
+            const seleccion = document.getElementById(modoGuardado);
+
+            if (seleccion) {
+                //Lo marcamos como seleccionado
+                seleccion.checked = true;
+            }
+        }
+    } catch (error) {
+        console.error("Error al cargar el modo de fuente inicial:", error);
+    }
+
+    const radiosModo = document.querySelectorAll('input[name="btnmodoVisual"]');
+
+    radiosModo.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            //Leemos cual a pulsado el usuario
+            const modoElegido = e.target.id; 
+            
+            cambiarModoFuente(modoElegido);
+        });
+    });
 });
 
 //Obtiene la API Key de la configuración de usuario
@@ -302,5 +334,20 @@ async function sincronizarOrdenConBackend() {
         }
     } catch (error) {
         console.error("Error al invocar guardar-orden-ciudades:", error);
+    }
+}
+
+//Envía el modo de fuente al backend
+async function cambiarModoFuente(modoFuente) {
+    try {
+        console.log("Enviando: " + modoFuente);
+        const resultado = await window.api.guardarModoFuente(modoFuente);
+        if (resultado && resultado.success) {
+            console.log("Fuente guardada con éxito en el JSON:", resultado.datos);
+        } else {
+            console.error("No se pudo guardar el modo de fuente en el JSON:", resultado ? resultado.error : "Respuesta vacía o indefinida");
+        }
+    } catch (error) {
+        console.error("Error al invocar guardar-fuente:", error);
     }
 }

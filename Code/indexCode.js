@@ -38,6 +38,19 @@ async function comprobarApi() {
     }
 }
 
+async function comprobarModo() {
+    const modo = await window.api.getModoFuente();
+    console.log("Modo fuente: "+modo.datos);
+    switch (modo.datos) {
+        case "Normal":
+            break;
+        case "Claro":
+            break;
+        case "Oscuro":
+            break;
+    }
+}
+
 //Comprueba que la ciudad exista, y verifica que no estuviese ya en el json.
 async function aniadirCiudad() {
     const modalElement = document.getElementById('nuevaCiudadModal');

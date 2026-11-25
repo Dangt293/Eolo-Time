@@ -9,5 +9,7 @@ contextBridge.exposeInMainWorld('api', {
     eliminarCiudad: (ciudad) => ipcRenderer.invoke('eliminar-ciudad', ciudad),
     guardarOrdenCiudades: (nuevoOrden) => ipcRenderer.invoke('guardar-orden-ciudades', nuevoOrden),
     obtenerFondo: () => ipcRenderer.invoke('obtener-fondo'),
-    guardarFondo: (nombreFondo) => ipcRenderer.invoke('guardar-fondo', nombreFondo)
+    guardarFondo: (nombreFondo) => ipcRenderer.invoke('guardar-fondo', nombreFondo),
+    getModoFuente: () => ipcRenderer.invoke('leer-modo-fuente'),
+    guardarModoFuente: (modoFuente) => ipcRenderer.invoke('guardar-fuente', modoFuente)
 });
