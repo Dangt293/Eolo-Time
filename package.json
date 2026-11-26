@@ -4,12 +4,28 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder"
   },
   "author": "Danigt",
   "license": "ISC",
   "description": "Aplicación para ver el tiempo",
+  "build": {
+    "appId": "danigt.eolotime",
+    "productName": "Eolo-Time",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/Icono.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
   "devDependencies": {
-    "electron": "^42.0.0"
+    "electron": "^42.0.0",
+    "electron-builder": "^..."
   }
 }
