@@ -120,3 +120,13 @@ body {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
 }
+
+/** Modo oscuro **/
+.dark {
+    color: var(--oscuro) !important;
+}
+
+/** Modo claro **/
+.bright {
+    color: var(--blanco) !important;
+}

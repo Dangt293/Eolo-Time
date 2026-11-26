@@ -177,6 +177,9 @@ async function mostrarClima(datos, forecast, ciudad, pais) {
     document.getElementById("capaSpinner").style.setProperty('display', 'none', 'important');
     document.getElementById("contenido-principal").classList.remove("d-none");
     document.getElementById("footer").classList.remove("d-none");
+
+    //Vemos de que color poner la fuente
+    comprobarModo();
 }
 
 //Hace una llamada a OpenWeather para obtener el índice UV de la ciudad
@@ -308,4 +311,29 @@ function obtenerIconoBootstrap(codigoIcono) {
     };
 
     return mapa[codigoIcono];
+}
+
+//Comprueba el modo de la fuente que el usuario tiene elegido 
+async function comprobarModo() {
+    const modo = await window.api.getModoFuente();
+    console.log("Modo fuente: "+modo.datos);
+    switch (modo.datos) {
+        case "Normal":
+            //No hay que hacer nada
+            break;
+        case "Claro":
+            //No hay que hacer nada
+            break;
+        case "Oscuro":
+            document.body.classList.add("dark");
+
+            //Seleccionamos todos los elementos con la clase text-white
+            let elementos = document.querySelectorAll('.text-white-50');
+            console.log("Número de elementos encontrados:", elementos.length);
+
+            elementos.forEach(elemento => {
+                elemento.classList.remove("text-white-50");
+            });
+            break;
+    }
 }

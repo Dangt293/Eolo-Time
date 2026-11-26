@@ -40,6 +40,7 @@ async function comprobarApi() {
     comprobarModo();
 }
 
+//Comprueba el modo de la fuente que el usuario tiene elegido
 async function comprobarModo() {
     const modo = await window.api.getModoFuente();
     console.log("Modo fuente: "+modo.datos);
