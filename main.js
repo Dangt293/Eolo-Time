@@ -190,6 +190,35 @@ ipcMain.handle('guardar-fondo', async (event, nuevoFondo) => {
     }
 });
 
+//Guarda el modo de la fuente seleccionado por el usuario
+ipcMain.handle('guardar-fuente', async (event, nuevoModo) => {
+    const rutaArchivo = path.join(app.getPath('userData'), 'config-eolotime.json');
+    console.log("Modo recibido en el backend:", nuevoModo);
+    
+    let config = {};
+
+    try {
+        // Si ya existe el archivo, leemos su contenido actual
+        if (fs.existsSync(rutaArchivo)) {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            if (contenido.trim() !== "") {
+                config = { ...config, ...JSON.parse(contenido) };
+            }
+        }
+
+        // Actualizamos el fondo con el valor recibido
+        config.modoFuente = nuevoModo;
+
+        // Guardamos el JSON actualizado
+        fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2), 'utf8');
+
+        return { success: true, datos: config.modoFuente };
+    } catch (error) {
+        console.error("Error al guardar el modo de fuente:", error);
+        return { success: false, error: error.message };
+    }
+});
+
 // *LECTURA*
 // Función para leer la Key de OpenWeather
 ipcMain.handle('leer-key', () => {
@@ -268,6 +297,29 @@ ipcMain.handle('obtener-fondo', async () => {
             return { status: 'success', datos: config.background };
         } catch (e) {
             console.error("Error al inicializar fondo:", e);
+            return null;
+        }
+    }
+    return null;
+});
+
+//Lee el color de la fuente
+ipcMain.handle('leer-modo-fuente', async () => {
+    if (fs.existsSync(rutaArchivo)) {
+        try {
+            const contenido = fs.readFileSync(rutaArchivo, 'utf8');
+            let config = JSON.parse(contenido);
+
+            // Solo añadimos el modo si no existía ya
+            if (!config.modoFuente) {
+                config.modoFuente = "Normal";
+                fs.writeFileSync(rutaArchivo, JSON.stringify(config, null, 2));
+                return { success: true, datos: config.modoFuente };
+            }
+            
+            return { success: true, datos: config.modoFuente };
+        } catch (e) {
+            console.error("Error al inicializar datos:", e);
             return null;
         }
     }

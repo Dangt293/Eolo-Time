@@ -1,3 +1,5 @@
+let timezoneCiudad = ""; //Variable global para el timezone
+
 window.addEventListener('DOMContentLoaded', () => {
     // Leer el parámetro ?ciudad= de la URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -10,27 +12,34 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//Actualiza la fecha (hora del dispositivo)
+//Actualiza la fecha (hora de la ciudad monitoreada)
 function actualizarFecha() {
     const ahora = new Date();
 
-    // Configuramos el formato de hora local
+    const timestampUtc = ahora.getTime();
+
+    //Creamos la fecha sumando directamente los segundos que nos dio OpenWeather
+    const fechaCiudad = new Date(timestampUtc + (timezoneCiudad * 1000));
+
+    // Configuramos el formato de hora local (añadimos timeZone: 'UTC' para que respete el cálculo exacto)
     const opciones = {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false
+        hour12: false,
+        timeZone: 'UTC'
     };
 
-    //Configuramos el formato de la fecha
+    // Configuramos el formato de la fecha
     const opcionesFecha = {
-        weekday: 'long', // Muestra el día completo
-        day: 'numeric',  // Muestra el número del día
-        month: 'long'    // Muestra el mes completo
+        weekday: 'long', 
+        day: 'numeric',  
+        month: 'long',
+        timeZone: 'UTC'
     };
     
-    //Undefined para que "coja" la hora del dispositivo
-    let fechaString = ahora.toLocaleDateString(undefined, opcionesFecha);
-    const horaString = ahora.toLocaleTimeString(undefined, opciones); 
+    // Usamos 'fechaCiudad' en lugar de la hora local
+    let fechaString = fechaCiudad.toLocaleDateString(undefined, opcionesFecha);
+    const horaString = fechaCiudad.toLocaleTimeString(undefined, opciones); 
  
     // Actualizamos el contenido del span
     document.getElementById('fecha').textContent = fechaString;
@@ -63,6 +72,10 @@ async function obtenerClima(ciudad, pais) {
         }
 
         const datos = await respuesta.json();
+
+        //Obtiene la zona horaria de la ciudad
+        timezoneCiudad = datos.timezone;
+        actualizarFecha();
 
         //Hacemos la llamada a la API para obtener la previsión por horas
         const respForecast = await fetch(url2);
@@ -164,6 +177,9 @@ async function mostrarClima(datos, forecast, ciudad, pais) {
     document.getElementById("capaSpinner").style.setProperty('display', 'none', 'important');
     document.getElementById("contenido-principal").classList.remove("d-none");
     document.getElementById("footer").classList.remove("d-none");
+
+    //Vemos de que color poner la fuente
+    comprobarModo();
 }
 
 //Hace una llamada a OpenWeather para obtener el índice UV de la ciudad
@@ -199,19 +215,27 @@ function obtenerPronosticoHoras(forecast) {
     let html = '';
 
     proximosTramos.forEach(tramo => {
-        // Formatear hora a HH:mm
-        const fecha = new Date(tramo.dt * 1000);
-        const hora = fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        //Calculamos según la hora de la ciudad monitoreada
+        const timestampCiudadMs = (tramo.dt + timezoneCiudad) * 1000;
+        const fechaCiudad = new Date(timestampCiudadMs);
+
+        const hora = fechaCiudad.toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            hour12: false,
+            timeZone: 'UTC' //Para que el navegador no use la hora local del dispositivo
+        });
         
         const temp = Math.round(tramo.main.temp);
         const codIcono = tramo.weather[0].icon;
+        const titulo = tramo.weather[0].description;
 
         const icono = obtenerIconoBootstrap(codIcono);
 
         html += `
             <div class="hourly-item">
                 <small class="text-white-50">${hora}</small>
-                    <i class = "bi ${icono} d-block my-2 fs-4"></i>
+                    <i class = "bi ${icono} d-block my-2 fs-4" title = "${titulo}"></i>
                     <strong>${temp}°</strong>
             </div>
         `;
@@ -287,4 +311,29 @@ function obtenerIconoBootstrap(codigoIcono) {
     };
 
     return mapa[codigoIcono];
+}
+
+//Comprueba el modo de la fuente que el usuario tiene elegido 
+async function comprobarModo() {
+    const modo = await window.api.getModoFuente();
+    console.log("Modo fuente: "+modo.datos);
+    switch (modo.datos) {
+        case "Normal":
+            //No hay que hacer nada
+            break;
+        case "Claro":
+            //No hay que hacer nada
+            break;
+        case "Oscuro":
+            document.body.classList.add("dark");
+
+            //Seleccionamos todos los elementos con la clase text-white
+            let elementos = document.querySelectorAll('.text-white-50');
+            console.log("Número de elementos encontrados:", elementos.length);
+
+            elementos.forEach(elemento => {
+                elemento.classList.remove("text-white-50");
+            });
+            break;
+    }
 }

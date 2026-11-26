@@ -47,6 +47,20 @@ body {
 }
 
 /** Body **/
+.icono-clima-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /*Tamaño del circulo*/
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px); /* El efecto de cristal desenfocado */
+    -webkit-backdrop-filter: blur(8px); /* Compatibilidad con WebKit/Electron */
+}
+
 .glass-card {
     background: var(--fondo-card);
     backdrop-filter: blur(10px);
@@ -105,4 +119,14 @@ body {
 .scroll-x::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
+}
+
+/** Modo oscuro **/
+.dark {
+    color: var(--oscuro) !important;
+}
+
+/** Modo claro **/
+.bright {
+    color: var(--blanco) !important;
 }
