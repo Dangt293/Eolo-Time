@@ -1,3 +1,12 @@
+window.addEventListener('DOMContentLoaded', async () => {
+    const versionSpan = document.getElementById('app-version');
+    
+    if (versionSpan && window.api) {
+        const version = await window.api.getAppVersion();
+        versionSpan.textContent = `v${version}`;
+    }
+});
+
 //Actualiza el reloj (hora del dispositivo)
 function actualizarReloj() {
     const ahora = new Date();
@@ -70,6 +79,7 @@ async function comprobarModo() {
             break;
         case "Oscuro":
             document.getElementById("encabezado").classList.add("dark");
+            document.getElementById("footer").classList.add("dark");
             break;
     }
 }
