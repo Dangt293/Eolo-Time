@@ -331,3 +331,8 @@ ipcMain.handle('leer-modo-fuente', async () => {
 ipcMain.on('abrir-link-externo', (event, url) => {
   shell.openExternal(url);
 });
+
+//Para obtener la versión de la app
+ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
+});
