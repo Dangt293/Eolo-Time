@@ -223,4 +223,6 @@ function mostrarClima(datos, ciudadSolicitada) {
 
     //Insertamos al final del contenedor
     contenedor.insertAdjacentHTML('beforeend', tarjetaHTML);
+
+    comprobarModo();
 }
